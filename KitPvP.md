@@ -1,2 +1,2 @@
-- [] Adding ability to edit kit layouts
-- [] Adding duel mode
+- [ ] Adding ability to edit kit layouts
+- [ ] Adding duel mode
