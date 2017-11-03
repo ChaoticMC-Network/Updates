@@ -1,0 +1,2 @@
+- [ ] Cosmetics
+- [ ] Music (Noteblock API)
