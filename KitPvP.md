@@ -1,2 +1,7 @@
-- [ ] Adding ability to edit kit layouts
-- [ ] Adding duel mode
+- [ ] Kit Layouts
+- [ ] Duels
+- [ ] Voting
+- [ ] Leveling Rewards
+- [ ] Cosmetics Unlocker (Based on Level)
+- [ ] New Kits
+- [ ] Event Listener
