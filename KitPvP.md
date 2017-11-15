@@ -1,7 +1,1 @@
 - [ ] Kit Layouts
-- [ ] Duels
-- [ ] Voting
-- [ ] Leveling Rewards
-- [ ] Cosmetics Unlocker (Based on Level)
-- [ ] New Kits
-- [ ] Event Listener
