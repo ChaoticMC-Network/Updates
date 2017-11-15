@@ -1,0 +1,36 @@
+command /vote:
+  description: Basic Voting Reward
+  trigger:
+    open chest with 1 row named "Vote Menu" to player
+    wait 1 tick
+    format gui slot 0 of player with 1 emerald named "&aPlanet Minecraft" with lore "&eClick to vote on PMC" to close then make player execute command "/votelink 1" with left click
+    format gui slot 1 of player with 1 emerald named "&aMinecraft-Servers" with lore "&eClick to vote on MC-Servers" to close then make player execute command "/votelink 2" with left click
+    format gui slot 8 of player with 1 nether star named "&aYour Stats" with lore "||&eTotal Votes: &a%{Votes::%UUID of player%}%" to do nothing
+  
+command /votelink [<text>]:
+  trigger:
+    if arg-1 is not set:
+      send "&7You must specify a number. (&e1-2&7)"
+    else:
+      if arg-1 is "1":
+        send "&eVote link 1: &b(YOUR LINK HERE)"
+      if arg-1 is "2":
+        send "&eVote link 2: &b(YOUR LINK HERE)"
+    
+command /levelingrewards:
+  description: Basic Level Rewards
+  aliases: /levlerewards, /lvlreward, /lvlrewards
+  trigger:
+    open chest with 6 rows named "Level Menu" to player
+    wait 1 tick
+    if {Level::%UUID of player%} > 1:
+      if {Reward1::%UUID of player%} is true:
+        format gui slot 0 of player with 1 342 named "&aLevel 1 Reward" with lore "||&a+ &e15 Coins" to close then make player execute command "/levelreward 1" with left click
+      else:
+        format gui slot 0 of player with 1 84 named "&cLevel 1 Reward" with lore "||&cYou have already claimed this reward" to do nothing
+    if {Level::%UUID of player%} > 2:
+      if {Reward2::%UUID of player%} is true:
+        format gui slot 0 of player with 1 342 named "&aLevel 2 Reward" with lore "||&a+ &e15 Coins" to close then make player execute command "/levelreward 2" with left click
+      else:
+        format gui slot 0 of player with 1 84 named "&cLevel 2 Reward" with lore "||&cYou have already claimed this reward" to do nothing
+  
