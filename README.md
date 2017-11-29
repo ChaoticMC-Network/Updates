@@ -29,7 +29,7 @@
 # Kits
 - [ ] Farmer Kit
 - [ ] Spider Kit
-- [ ] Thief Kit
+- [ ] Assassin Kit
 - [ ] Miner Kit
 - [ ] Baker Kit
 - [ ] Golem Kit
