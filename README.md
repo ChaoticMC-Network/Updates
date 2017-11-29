@@ -36,3 +36,10 @@
 - [ ] Villager Kit
 - [ ] Zeus Kit
 - [ ] Flare Kit
+- [ ] Witch Kit
+- [ ] Engineer Kit
+- [ ] Squid Kit
+- [ ] Ninja Kit
+- [ ] Shotgun Kit
+- [ ] Tank Kit
+- [ ] King Kit
