@@ -374,13 +374,12 @@ on quit:
 	delete {DoubleDamage::%UUID of player%}
 
 on death of player:
-	if attacker is not console:
-		add 1 to {Deaths::%UUID of victim%}
-		add 1 to {Kills::%UUID of attacker%}
-		delete {Class::%UUID of victim%}
-		add 1 to {LevelProgress::%UUID of attacker%}
-		set {CopyCat::%UUID of victim%} to {Class::%UUID of attacker%}
-		set {KDR::%UUID of player%} to {Kills::%UUID of player%}/{Deaths::%UUID of player%}
+	add 1 to {Deaths::%Victim%}
+	add 1 to {Kills::%Attacker%}
+	delete {Class::%UUID of victim%}
+	add 1 to {LevelProgress::%UUID of attacker%}
+	set {CopyCat::%UUID of victim%} to {Class::%UUID of attacker%}
+	set {KDR::%UUID of player%} to {Kills::%UUID of player%}/{Deaths::%UUID of player%}
 
 every 3 seconds:
 	loop all players:
@@ -5368,6 +5367,12 @@ command /createleaderboard:
 	permission: kitpvp.createleaderboard
 	trigger:
 		set {kills.leaderboard.holo} to player's location
+		
+command /deleteleaderboard:
+	permission: kitpvp.deleteleaderboard
+	trigger:
+		delete {kills.leaderboard.holo}
+		delete {levels.leaderboard.holo}
 		
 every 30 seconds:
 	set {_1st.kills} to 0
