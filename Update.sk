@@ -1,0 +1,29 @@
+on right click with wheat:
+  if name of player's tool is "&eEgg Storm &f(Right Click)":
+    loop 20 times:
+      make player shoot an egg at speed 2
+
+on projectile hit:
+  if projecitle is an egg:
+    damage the player by 1.5 hearts
+    
+on right click with spider eye:
+  if name of player's tool is "&aPoison Stinger &f(Right Click)":
+    loop 3 times:
+      make player shoot an arrow at speed 2
+   
+on right click with ghast tear:
+  if name of player's tool is "&CBackstab &f(Right Click)":
+    if "%region of {Killer::%UUID of player%}%" is not "Spawn":
+      teleport player to {Killer::%UUID of player%}%"
+     apply potion of strength to player for 3 seconds
+     
+on right click with diamond pickaxe:
+  if name of player's tool is "&aQuick Pick &f(Right Click)":
+    apply potion of haste 2 to player for 5 seconds
+    
+on right click with cake:
+  if name of player's tool is "&6Sugar Rush &f(Right Click)":
+    loop players in radius 5 around player:
+      apply potion of nausea to player for 5 seconds
+      apply potion of speed 2 to player for 3 seconds
