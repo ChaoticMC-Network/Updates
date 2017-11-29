@@ -5,15 +5,6 @@
 - [ ] Kit Perks
 - [ ] Cosmetics Unlocker
 - [ ] Chat Color (Donors)
-- [ ] Farmer Kit
-- [ ] Spider Kit
-- [ ] Thief Kit
-- [ ] Miner Kit
-- [ ] Baker Kit
-- [ ] Golem Kit
-- [ ] Villager Kit
-- [ ] Zeus Kit
-- [ ] Flare Kit
 - [ ] Demolitionist Kit
 - [ ] Kit Abilities Revamp
 - [ ] Scoreboard Changes
@@ -32,3 +23,16 @@
 - [ ] NEW GUI 
 - [ ] New Map
 - [ ] Leveling Rewards
+
+
+
+#Kits
+- [ ] Farmer Kit
+- [ ] Spider Kit
+- [ ] Thief Kit
+- [ ] Miner Kit
+- [ ] Baker Kit
+- [ ] Golem Kit
+- [ ] Villager Kit
+- [ ] Zeus Kit
+- [ ] Flare Kit
