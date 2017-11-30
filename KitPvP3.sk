@@ -2,7 +2,7 @@ on respawn:
   event.setRespawnLocation({_location});
 
 on death of player:
-	wait 8 ticks
+	wait 9 ticks
 	force player to respawn
 	wait 8 ticks
 	set the victim's gamemode to spectator
