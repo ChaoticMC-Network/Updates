@@ -6,16 +6,13 @@ on death of player:
 	force player to respawn
 	wait 8 ticks
 	set the victim's gamemode to spectator
-	send attacker title "&cYou killed %victim%" with subtitle "&eYou gained &a1 XP" for 3 seconds
+	send attacker title "&cYou killed %victim%" with subtitle "&eYou gained &e1 Coin" for 3 seconds
 	send player title "&cYou Died!" with subtitle "&eYou were killed by &b%attacker%" for 3 seconds
 	wait 1 second
-	play "CHICKEN_EGG_POP" to player at volume 1
 	send player title "" with subtitle "&eRespawning in &c3"
 	wait 2 seconds
-	play "CHICKEN_EGG_POP" to player at volume 1
 	send player title "" with subtitle "&eRespawning in &c2"
 	wait 1 second
-	play "CHICKEN_EGG_POP" to player at volume 1
 	send player title "" with subtitle "&eRespawning in &c1"
 	wait 1.5 seconds
 	set the victim's gamemode to survival
@@ -148,7 +145,7 @@ on damage:
 		set {SwingRatio::%UUID of attacker%} to {Swings::%UUID of attacker%}/{Misses::%UUID of attacker%} * 100
 	
 on first join:
-	set {Kills::%UUID of player%} to "0"
+	set {Kills::%player%} to "0"
 	set {Deaths::%UUID of player%} to "0"
 	set {KDR::%UUID of player%} to "0"
 	set {Level::%UUID of player%} to "0"
@@ -188,34 +185,8 @@ on quit:
 		set leave message to ""
 	else:
 		set leave message to ""
-		broadcast "&7[&c-&7] &c%player%"
-	
-command /convert:
-	aliases: /shop
-	trigger:
-		wait 1 tick
-		open chest with 1 row named "&nConverter" to player
-		format gui slot 0 of player with 1 emerald named "&a15 XP &f➟ &e5 Coins" with lore "||&7Click to purchase" to run player command "/convertcoins" with left click
-			
-command /convertcoins:
-	trigger:
-		if {XPupgradepoints::%UUID of player%} is greater than or equal to 15:
-			remove 15 from {XPupgradepoints::%UUID of player%}
-			add 5 to {upgradepoints::%UUID of player%}
-			wait 1 tick
-			send ""
-			play "SUCCESSFUL_HIT" to player at volume 1.5
-			send "&aSuccessfully purchased 5 coins"
-			send ""
-			send "&fXP: &a%{XPupgradepoints::%UUID of player%}%"
-			send "&fCoins: &e%{upgradepoints::%UUID of player%}%"
-			send ""
-			wait 1 tick
-			make player execute command "/convert"
-		else:
-			if {XPupgradepoints::%UUID of player%} is less than 15:
-				send "&7You need &a%difference between {XPupgradepoints::%UUID of player%} and 15% &7more XP to purchase this"
-			
+		broadcast "&7[&c-&7] &c%player%"		
+
 command /resetlevels:
 	permission: kitpvp.resetlevels
 	permission message: &cYou don't have permission to do this
@@ -378,7 +349,6 @@ on death of player:
 	add 1 to {Kills::%Attacker%}
 	delete {Class::%UUID of victim%}
 	add 1 to {LevelProgress::%UUID of attacker%}
-	set {CopyCat::%UUID of victim%} to {Class::%UUID of attacker%}
 	set {KDR::%UUID of player%} to {Kills::%UUID of player%}/{Deaths::%UUID of player%}
 
 every 3 seconds:
@@ -872,7 +842,7 @@ command /purchasekit [<text>]:
 					send "&7You already have this kit unlocked"
 					close player's inventory
 				else:
-					if {upgradepoints::%UUID of player%} is greater than or equal to 37:
+					if {upgradepoints::%UUID of player%} is greater than or equal to 42:
 						remove 42 from {upgradepoints::%UUID of player%}
 						make console execute command "pex user %player% add kit.vampire"
 						close player's inventory
@@ -882,6 +852,29 @@ command /purchasekit [<text>]:
 						stopEffect "%player%"
 						send ""
 						send "&7You unlocked access to &d&nVampire Kit"
+						send ""
+						make player execute command "/kit"
+		if arg-1 is "Farmer":
+			if {upgradepoints::%UUID of player%} is less than 300:
+				close player's inventory
+				send ""
+				send "&7You need &e%difference between 300 and {upgradepoints::%UUID of player%}% &7more coins to purchase &e&nFarmer Kit"
+				send ""
+			else:
+				if player has permission "kit.farmer":
+					send "&7You already have this kit unlocked"
+					close player's inventory
+				else:
+					if {upgradepoints::%UUID of player%} is greater than or equal to 300:
+						remove 300 from {upgradepoints::%UUID of player%}
+						make console execute command "pex user %player% add kit.farmer"
+						close player's inventory
+						play "LEVEL_UP" to player at volume 1.0
+						drawWarpRings style 1, particle "redstone", RGB 0, 255, 21, center location of block at player, id "%player%", rainbowMode false, scan false, height 7, radius 1.2, ringCount 40, ringDensity 20, visibleRange 32
+						wait 0.4 seconds
+						stopEffect "%player%"
+						send ""
+						send "&7You unlocked access to &e&nFarmer Kit"
 						send ""
 						make player execute command "/kit"
 command /kit [<text>]:
@@ -998,70 +991,62 @@ command /kit [<text>]:
 				wait 1 tick
 				format gui slot 19 of player with 1 gray dye named "&c&nEnchanter Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Enchant Storm||||&c★ &fCost: &e21 ❂||||&7Left click to purchase this kit" to run player command "purchasekit enchanter" with left click
 				format gui slot 19 of player with 1 gray dye named "&c&nEnchanter Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Enchant Storm||||&c★ &fCost: &e21 ❂||||&7Left click to purchase this kit" to run player command "previewkit Enchanter" with right click
-			if player has permission "kit.copycat":
-				wait 1 tick
-				format gui slot 20 of player with 1 egg named "&a&nCopycat Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Copy||||&eClick to Select" to run player command "/kit Copycat" with left click
-				format gui slot 20 of player with 1 egg named "&a&nCopycat Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Copy||||&eClick to Select" to run player command "/nopreview" with right click
-			else:
-				wait 1 tick
-				format gui slot 20 of player with 1 gray dye named "&c&nCopycat Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Copy||||&c★ &fCost: &e32 ❂||||&7Left click to purchase this kit" to run player command "purchasekit copycat" with left click
-				format gui slot 20 of player with 1 gray dye named "&c&nCopycat Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Copy||||&c★ &fCost: &e32 ❂||||&7Left click to purchase this kit" to run player command "nopreview" with right click
 			if player has permission "kit.viper":
 				wait 1 tick
-				format gui slot 21 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/kit Viper" with left click
-				format gui slot 21 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/previewkit Viper" with right click
+				format gui slot 20 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/kit Viper" with left click
+				format gui slot 20 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/previewkit Viper" with right click
 			else:
 				wait 1 tick
-				format gui slot 21 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "purchasekit viper" with left click
-				format gui slot 21 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "previewkit viper" with right click
+				format gui slot 20 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "purchasekit viper" with left click
+				format gui slot 20 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "previewkit viper" with right click
 			if player has permission "kit.bomber":
 				wait 1 tick
-				format gui slot 22 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/kit Bomber" with left click
-				format gui slot 22 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/previewkit Bomber" with right click
+				format gui slot 21 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/kit Bomber" with left click
+				format gui slot 21 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/previewkit Bomber" with right click
 			else:
 				wait 1 tick
-				format gui slot 22 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "purchasekit bomber" with left click
-				format gui slot 22 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "previewkit bomber" with right click
+				format gui slot 21 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "purchasekit bomber" with left click
+				format gui slot 21 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "previewkit bomber" with right click
 			if player has permission "kit.necromancer":
 				wait 1 tick
-				format gui slot 23 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/kit Necromancer" with left click
-				format gui slot 23 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/previewkit Necromancer" with right click
+				format gui slot 22 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/kit Necromancer" with left click
+				format gui slot 22 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/previewkit Necromancer" with right click
 			else:
 				wait 1 tick
-				format gui slot 23 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "purchasekit necromancer" with left click
-				format gui slot 23 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "previewkit necromancer" with right click
+				format gui slot 22 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "purchasekit necromancer" with left click
+				format gui slot 22 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "previewkit necromancer" with right click
 			if player has permission "kit.wizard":
 				wait 1 tick
-				format gui slot 24 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/kit Wizard" with left click
-				format gui slot 24 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/previewkit Wizard" with right click
+				format gui slot 23 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/kit Wizard" with left click
+				format gui slot 23 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/previewkit Wizard" with right click
 			else:
 				wait 1 tick
-				format gui slot 24 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "purchasekit wizard" with left click
-				format gui slot 24 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "previewkit Wizard" with right click
+				format gui slot 23 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "purchasekit wizard" with left click
+				format gui slot 23 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "previewkit Wizard" with right click
 			if player has permission "kit.fisherman":
 				wait 1 tick
-				format gui slot 25 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/kit Fisherman" with left click
-				format gui slot 25 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/previewkit Fisherman" with right click
+				format gui slot 24 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/kit Fisherman" with left click
+				format gui slot 24 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/previewkit Fisherman" with right click
 			else:
 				wait 1 tick
-				format gui slot 25 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "purchasekit fisherman" with left click
-				format gui slot 25 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "previewkit fisherman" with right click
+				format gui slot 24 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "purchasekit fisherman" with left click
+				format gui slot 24 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "previewkit fisherman" with right click
 			if player has permission "kit.alchemist":
 				wait 1 tick
-				format gui slot 26 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/kit Alchemist" with left click
-				format gui slot 26 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/previewkit Alchemist" with right click
+				format gui slot 25 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/kit Alchemist" with left click
+				format gui slot 25 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/previewkit Alchemist" with right click
 			else:
 				wait 1 tick
-				format gui slot 26 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "purchasekit alchemist" with left click
-				format gui slot 26 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "previewkit alchemist" with right click
+				format gui slot 25 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "purchasekit alchemist" with left click
+				format gui slot 25 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "previewkit alchemist" with right click
 			if player has permission "kit.vampire":
 				wait 1 tick
-				format gui slot 27 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/kit Vampire" with left click
-				format gui slot 27 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/previewkit Vampire" with right click
+				format gui slot 26 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/kit Vampire" with left click
+				format gui slot 26 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/previewkit Vampire" with right click
 			else:
 				wait 1 tick
-				format gui slot 27 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "purchasekit vampire" with left click
-				format gui slot 27 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "previewkit vampire" with right click
+				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "purchasekit vampire" with left click
+				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "previewkit vampire" with right click
 		if arg-1 is "Basic":
 			player has permission "kit.Basic":
 				if {Tracker::%UUID of player%} is set:
@@ -1752,92 +1737,41 @@ command /kit [<text>]:
 					send "&7You have selected the &bWizard Kit"
 		if arg-1 is "Alchemist":
 			player has permission "kit.alchemist":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Alchemist"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 379 named "&6Alchemy &f(Right Click)" with lore "||&fAbility: &aAlchemy||||&eGet a random effect||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eAlchemist Helmet"
-					equip player with iron chestplate named "&eAlchemist Chestplate"
-					equip player with iron leggings named "&eAlchemist Leggings"
-					equip player with iron boots named "&eAlchemist Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &6Alchemist Kit"
-				else:
-					set {Class::%UUID of player%} to "Alchemist"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 379 named "&6Alchemy &f(Right Click)" with lore "||&fAbility: &aAlchemy||||&eGet a random effect||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eAlchemist Helmet"
-					equip player with iron chestplate named "&eAlchemist Chestplate"
-					equip player with iron leggings named "&eAlchemist Leggings"
-					equip player with iron boots named "&eAlchemist Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &6Alchemist Kit"
+				set {Class::%UUID of player%} to "Alchemist"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 379 named "&6Alchemy &f(Right Click)" with lore "||&fAbility: &aAlchemy||||&eGet a random effect||&fCooldown: &a20s"
+				set slot 8 of player's inventory to 1 compass named "&cTracker"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eAlchemist Helmet"
+				equip player with iron chestplate named "&eAlchemist Chestplate"
+				equip player with iron leggings named "&eAlchemist Leggings"
+				equip player with iron boots named "&eAlchemist Boots"
+				send "&7You have selected the &6Alchemist Kit"
 		if arg-1 is "Vampire" or "vamp":
 			player has permission "kit.vampire":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Vampire"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 nether wart named "&aLife Steal &f(Right Click)" with lore "||&fAbility: &aLife Steal||||&eHeal back when attacking||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eVampire Helmet"
-					equip player with iron chestplate named "&eVampire Chestplate"
-					equip player with iron leggings named "&eVampire Leggings"
-					equip player with iron boots named "&eVampire Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &dVampire Kit"
-				else:
-					set {Class::%UUID of player%} to "Vampire"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 nether wart named "&aLife Steal &f(Right Click)" with lore "||&fAbility: &aLife Steal||||&eHeal back when attacking||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eVampire Helmet"
-					equip player with iron chestplate named "&eVampire Chestplate"
-					equip player with iron leggings named "&eVampire Leggings"
-					equip player with iron boots named "&eVampire Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &dVampire Kit"
-	
-command /tracker:
-	description: Toggle your Player Tracker
-	trigger:
-		if {Tracker::%UUID of player%} is not set:
-			set {Tracker::%UUID of player%} to "True"
-			send "&7You have &a&nenabled&r &7your player tracker"
-		else:
-			delete {Tracker::%UUID of player%}
-			send "&7You have &c&ndisabled&r &7your player tracker"
+				set {Class::%UUID of player%} to "Vampire"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 nether wart named "&aLife Steal &f(Right Click)" with lore "||&fAbility: &aLife Steal||||&eHeal back when attacking||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eVampire Helmet"
+				equip player with iron chestplate named "&eVampire Chestplate"
+				equip player with iron leggings named "&eVampire Leggings"
+				equip player with iron boots named "&eVampire Boots"
+				send "&7You have selected the &dVampire Kit"
 			
 on rightclick with blaze powder:
 	name of player's tool is "&6Blazing Inferno &f(Right Click)":
@@ -2246,9 +2180,6 @@ on entity target:
 on death of skeleton or zombie:
 	clear drops
 	cancel drops
-	
-on xp spawn:
-	cancel event	
 		
 on damage of entity:
 	if name of victim is "&e%attacker%'s Skeleton" or "&e%attacker%'s Zombie":
@@ -2274,7 +2205,7 @@ on rightclick with nether wart:
 on damage:
 	if {Vampire::%UUID of attacker%} is set:
 		set {_Amount} to damage
-		heal attacker by {_Amount}/4
+		heal attacker by {_Amount}/5
 	wait 10 seconds
 	delete {Vampire::%UUID of attacker%}
 			
@@ -2446,13 +2377,6 @@ command /unlockkit [<text>]:
 			format gui slot 2 of player with 1 light green stained clay named "&aUnlock Kit" to run player command "/purchasekit Enchanter" with left click
 			format gui slot 4 of player with 1 iron sword named "&ePreview Kit" with lore "||&7Click to preview this kit" to run player command "/previewkit Enchanter" with left click
 			format gui slot 6 of player with 1 red stained clay named "&cBack to kit menu" to run player command "/kit" with left click
-		if arg-1 is "CopyCat":
-			wait 1 tick
-			open chest with 1 rows named "Options" to player
-			wait 1 tick
-			format gui slot 2 of player with 1 light green stained clay named "&aUnlock Kit" to run player command "/purchasekit Copycat" with left click
-			format gui slot 4 of player with 1 iron sword named "&ePreview Kit" with lore "||&7Click to preview this kit" to run player command "nopreview" with left click
-			format gui slot 6 of player with 1 red stained clay named "&cBack to kit menu" to run player command "/kit" with left click
 		if arg-1 is "Viper":
 			wait 1 tick
 			open chest with 1 rows named "Options" to player
@@ -2542,8 +2466,6 @@ on region leave:
 							make player execute command "/kit Kangaroo"
 						if {DefaultKit::%UUID of player%} is "Enchanter":
 							make player execute command "/kit Enchanter"
-						if {DefaultKit::%UUID of player%} is "Copycat":
-							make player execute command "/kit Copycat"
 						if {DefaultKit::%UUID of player%} is "Viper":
 							make player execute command "/kit Viper"
 						if {DefaultKit::%UUID of player%} is "Bomber":
@@ -2606,9 +2528,6 @@ command /defaultkit [<text>]:
 			if arg-1 is "Enchanter":
 				send "&7You have set your default kit to &3Enchanter"
 				set {DefaultKit::%UUID of player%} to "Enchanter"
-			if arg-1 is "Copycat":
-				send "&7You have set your default kit to &fCopycat"
-				set {DefaultKit::%UUID of player%} to "Copycat"
 			if arg-1 is "Viper":
 				send "&7You have set your default kit to &2Viper"
 				set {DefaultKit::%UUID of player%} to "Viper"
@@ -3130,8 +3049,6 @@ command /previewkit [<text>]:
 					close player's inventory
 					play "VILLAGER_NO" to player at volume 1
 					send "&7You are already previewing a kit"
-			if arg-1 is "Copycat":
-				send "&cThis kit has no preivew"
 			if arg-1 is "Viper":
 				if {PreviewMode::%UUID of player%} is not set:
 					delete {Gear::%UUID of player%::*}
@@ -3174,8 +3091,6 @@ command /previewkit [<text>]:
 					close player's inventory
 					play "VILLAGER_NO" to player at volume 1
 					send "&7You are already previewing a kit"
-			if arg-1 is "Copycat":
-				send "&cThis kit has no preivew"
 			if arg-1 is "Bomber":
 				if {PreviewMode::%UUID of player%} is not set:
 					delete {Gear::%UUID of player%::*}
@@ -3215,8 +3130,6 @@ command /previewkit [<text>]:
 						delete {PreviewMode::%UUID of player%}
 						play "ANVIL_BREAK" to player at volume 1
 						send "&7You have left &aPreview Mode"
-			if arg-1 is "Copycat":
-				send "&cThis kit has no preivew"
 			if arg-1 is "Necromancer":
 				if {PreviewMode::%UUID of player%} is not set:
 					delete {Gear::%UUID of player%::*}
@@ -3579,38 +3492,7 @@ every 5 minutes:
 		
 command /discord:
 	trigger:
-		send "&7Join our discord for free candy: &bhttps://discord.gg/TgPaPvr"
-
-on join:
-	wait 5 seconds
-	while player is online:
-		if player's tool is compass named "&cTracker":
-			loop players in radius 15 around player:
-				player is not loop-player
-				if {_target} is not set:
-					set {_target} to loop-player's location
-					set {_target} to loop-player
-				if distance between player and loop-player < distance between player and {_target}:
-					set {_target} to loop-player
-					set {_target} to distance between player and loop-player
-			if {_target} isn't set:
-				set action bar of player to "&eThere are no nearby players"
-				delete {current::%player%}
-			else:
-				set {current::%player%} to {_target}
-				set {_dist} to (distance between player and {_target}) rounded to 1 decimal place
-				set {_height} to (y-coord of {_target}) - (y-coord of player) rounded to 1 decimal place
-				set player's compass target to location of block at {_target}
-				if "%{_dist}%" doesn't contain ".":
-					set {_dist} to "%{_dist}%.0"
-				if "%{_height}%" doesn't contain ".":
-					set {_height} to "%{_height}%.0"
-				set action bar of player to "&eTargetting: &b%{_target}% &eDistance: &a%{_dist}%"
-			delete {_target}
-			delete {_dist}
-			delete {_height}
-		wait 8 ticks
-		
+		send "&7Join our discord server: &bhttps://discord.gg/TgPaPvr"
 		
 on death of player:
 	remove drops from drops
@@ -4013,1235 +3895,6 @@ command /soup:
 				send "&eYour soups have been refilled"
 				give player 35 mushroom stew named "&eMushroom Soup"
 		
-command /cosmetics:
-	trigger:
-		wait 1 tick
-		open chest with 1 row named "Cosmetics" to player
-		wait 1 tick
-		format gui slot 2 of player with 1 diamond sword named "&aKill Effects" with lore "||&cThis feature is coming soon" to close
-		format gui slot 4 of player with 1 bow named "&aArrow Trails" with lore "||&eClick to select" to run player command "/arrowtrails" with left click
-		format gui slot 6 of player with 1 blaze powder named "&aPlayer Trails" with lore "||&eClick to select" to run player command "/trails" with left click	
-
-command /arrowtrails:
-	aliases: /at
-	trigger:
-		wait 1 tick
-		open chest with 5 rows named "Arrow Trails" to player
-		wait 1 tick
-		format gui slot 0 of player with 1 rose named "&a" to run player command "/removeparticles" with left click
-		if {HeartATrail::%UUID of player%} is set:
-			format gui slot 9 of player with 1 light green dye named "&a&nHeart Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 9 of player with 1 gray dye named "&c&nHeart Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 1 of player with 1 blaze powder named "&a" to run player command "/removeparticles" with left click
-		if {FlameATrail::%UUID of player%} is set:
-			format gui slot 10 of player with 1 light green dye named "&a&nFlame Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 10 of player with 1 gray dye named "&c&nFlame Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 2 of player with 1 snowball named "&a" to run player command "/removeparticles" with left click
-		if {SnowATrail::%UUID of player%} is set:
-			format gui slot 11 of player with 1 light green dye named "&a&nSnow Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 11 of player with 1 gray dye named "&c&nSnow Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 3 of player with 1 ender pearl named "&a" to run player command "/removeparticles" with left click
-		if {EnderATrail::%UUID of player%} is set:
-			format gui slot 12 of player with 1 light green dye named "&a&nEnder Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 12 of player with 1 gray dye named "&c&nEnder Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 4 of player with 1 white dye named "&a" to run player command "/removeparticles" with left click
-		if {CloudATrail::%UUID of player%} is set:
-			format gui slot 13 of player with 1 light green dye named "&a&nCloud Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 13 of player with 1 gray dye named "&c&nCloud Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 5 of player with 1 lava bucket named "&a" to run player command "/removeparticles" with left click
-		if {LavaATrail::%UUID of player%} is set:
-			format gui slot 14 of player with 1 light green dye named "&a&nLava Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 14 of player with 1 gray dye named "&c&nLava Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 6 of player with 1 water bucket named "&a" to run player command "/removeparticles" with left click
-		if {WaterATrail::%UUID of player%} is set:
-			format gui slot 15 of player with 1 light green dye named "&a&nWater Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 15 of player with 1 gray dye named "&c&nWater Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 7 of player with 1 redstone named "&a" to run player command "/removeparticles" with left click
-		if {RedstoneATrail::%UUID of player%} is set:
-			format gui slot 16 of player with 1 light green dye named "&a&nRedstone Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 16 of player with 1 gray dye named "&c&nRedstone Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 8 of player with 1 slimeball named "&a" to run player command "/removeparticles" with left click
-		if {SlimeATrail::%UUID of player%} is set:
-			format gui slot 17 of player with 1 light green dye named "&a&nSlime Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 17 of player with 1 gray dye named "&c&nSlime Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 18 of player with 1 yellow stained glass pane named "&eDisable Particles" to run player command "/removeparticles" with left click
-		format gui slot 19 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 20 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 21 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 22 of player with 1 red stained glass pane named "&cBack to Cosmetics" to run player command "/cosmetics" with left click
-		format gui slot 23 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 24 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 25 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 26 of player with 1 yellow stained glass pane named "&eDisable Particles" to run player command "/removearrowparticles" with left click
-		format gui slot 27 of player with 1 nether star named "&a" to do nothing
-		if {CritATrail::%UUID of player%} is set:
-			format gui slot 36 of player with 1 light green dye named "&a&nCritical Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 36 of player with 1 gray dye named "&c&nCritical Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 28 of player with 1 emerald named "&a" to do nothing
-		if {HappyVillagerATraill::%UUID of player%} is set:
-			format gui slot 37 of player with 1 light green dye named "&a&nHappy Villager Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 37 of player with 1 gray dye named "&c&nHappy Villager Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 29 of player with 1 note block named "&a" to do nothing
-		if {NoteATrail::%UUID of player%} is set:
-			format gui slot 38 of player with 1 light green dye named "&a&nNote Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 38 of player with 1 gray dye named "&c&nNote Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 30 of player with 1 enchantment table named "&a" to do nothing
-		if {EnchantATrail::%UUID of player%} is set:
-			format gui slot 39 of player with 1 light green dye named "&a&nEnchant Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 39 of player with 1 gray dye named "&c&nEnchant Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 31 of player with 1 raw fish named "&a" to do nothing
-		if {BubbleATrail::%UUID of player%} is set:
-			format gui slot 40 of player with 1 light green dye named "&a&nBubble Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 40 of player with 1 gray dye named "&c&nBubble Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 32 of player with 1 water bottle named "&a" to do nothing
-		if {SpellATrail::%UUID of player%} is set:
-			format gui slot 41 of player with 1 light green dye named "&a&nSpell Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 41 of player with 1 gray dye named "&c&nSpell Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 33 of player with 1 coal named "&a" to do nothing
-		if {SmokeATrail::%UUID of player%} is set:
-			format gui slot 42 of player with 1 light green dye named "&a&nSmoke Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 42 of player with 1 gray dye named "&c&nSmoke Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 34 of player with 1 end portal frame named "&a" to do nothing
-		if {PortalATrail::%UUID of player%} is set:
-			format gui slot 43 of player with 1 light green dye named "&a&nPortal Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 43 of player with 1 gray dye named "&c&nPortal Arrow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 35 of player with 1 firework rocket with no nbt named "&a" to do nothing
-		if {FireworkATrail::%UUID of player%} is set:
-			format gui slot 44 of player with 1 light green dye named "&a&nFirework Spark Arrow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 44 of player with 1 gray dye named "&c&nFirework Spark Arrow Trail" with lore "||&7Status: &cDisabled"
-			
-on inventory click:
-	if name of clicked item is "&c&nHeart Arrow Trail":
-		if {HeartATrail::%UUID of player%} is not set:
-			set {HeartATrail::%UUID of player%} to "True"
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nHeart Trail"
-	if name of clicked item is "&c&nFlame Arrow Trail":
-		if {FlameATrail::%UUID of player%} is not set:
-			set {FlameATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nFlame Trail"
-	if name of clicked item is "&c&nSnow Arrow Trail":
-		if {SnowATrail::%UUID of player%} is not set:
-			set {SnowATrail::%UUID of player%} to "True"
-			delete {FlameATrail::%UUID of player%}
-			delete {HeartATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSnow Trail"
-	if name of clicked item is "&c&nEnder Arrow Trail":
-		if {EnderATrail::%UUID of player%} is not set:
-			set {EnderATrail::%UUID of player%} to "True"
-			delete {SnowATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {HeartATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nEnder Trail"
-	if name of clicked item is "&c&nCloud Arrow Trail":
-		if {CloudATrail::%UUID of player%} is not set:
-			set {CloudATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nCloud Trail"
-	if name of clicked item is "&c&nLava Arrow Trail":
-		if {LavaATrail::%UUID of player%} is not set:
-			set {LavaATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nLava Trail"
-	if name of clicked item is " ":
-		delete {LavaATrail::%UUID of player%}
-		delete {HeartATrail::%UUID of player%}
-		delete {FlameATrail::%UUID of player%}
-		delete {SnowATrail::%UUID of player%}
-		delete {EnderATrail::%UUID of player%}
-		delete {CloudATrail::%UUID of player%}
-		delete {WaterATrail::%UUID of player%}
-		delete {RedstoneATrail::%UUID of player%}
-		delete {SlimeATrail::%UUID of player%}
-		delete {CritATrail::%UUID of player%}
-		delete {HappyVillagerATraill::%UUID of player%}
-		delete {NoteATrail::%UUID of player%}
-		delete {EnchantATrail::%UUID of player%}
-		delete {BubbleATrail::%UUID of player%}
-		delete {SpellATrail::%UUID of player%}
-		delete {SmokeATrail::%UUID of player%}
-		delete {PortalATrail::%UUID of player%}
-		delete {FireworkATrail::%UUID of player%}
-		close player's inventory
-		send "&7Your particles have been removed. Glitching is bad."
-	if name of clicked item is "":
-		delete {LavaATrail::%UUID of player%}
-		delete {HeartATrail::%UUID of player%}
-		delete {FlameATrail::%UUID of player%}
-		delete {SnowATrail::%UUID of player%}
-		delete {EnderATrail::%UUID of player%}
-		delete {CloudATrail::%UUID of player%}
-		delete {WaterATrail::%UUID of player%}
-		delete {RedstoneATrail::%UUID of player%}
-		delete {SlimeATrail::%UUID of player%}
-		delete {CritATrail::%UUID of player%}
-		delete {HappyVillagerATraill::%UUID of player%}
-		delete {NoteATrail::%UUID of player%}
-		delete {EnchantATrail::%UUID of player%}
-		delete {BubbleATrail::%UUID of player%}
-		delete {SpellATrail::%UUID of player%}
-		delete {SmokeATrail::%UUID of player%}
-		delete {PortalATrail::%UUID of player%}
-		delete {FireworkATrail::%UUID of player%}
-		close player's inventory
-		send "&7Your particles have been removed. Glitching is bad."
-	if name of clicked item is "&a":
-		delete {LavaATrail::%UUID of player%}
-		delete {HeartATrail::%UUID of player%}
-		delete {FlameATrail::%UUID of player%}
-		delete {SnowATrail::%UUID of player%}
-		delete {EnderATrail::%UUID of player%}
-		delete {CloudATrail::%UUID of player%}
-		delete {WaterATrail::%UUID of player%}
-		delete {RedstoneATrail::%UUID of player%}
-		delete {SlimeATrail::%UUID of player%}
-		delete {CritATrail::%UUID of player%}
-		delete {HappyVillagerATraill::%UUID of player%}
-		delete {NoteATrail::%UUID of player%}
-		delete {EnchantATrail::%UUID of player%}
-		delete {BubbleATrail::%UUID of player%}
-		delete {SpellATrail::%UUID of player%}
-		delete {SmokeATrail::%UUID of player%}
-		delete {PortalATrail::%UUID of player%}
-		delete {FireworkATrail::%UUID of player%}
-		delete {LavaTrail::%UUID of player%}
-		delete {HeartTrail::%UUID of player%}
-		delete {FlameTrail::%UUID of player%}
-		delete {SnowTrail::%UUID of player%}
-		delete {EnderTrail::%UUID of player%}
-		delete {CloudTrail::%UUID of player%}
-		delete {WaterTrail::%UUID of player%}
-		delete {RedstoneTrail::%UUID of player%}
-		delete {SlimeTrail::%UUID of player%}
-		delete {CritTrail::%UUID of player%}
-		delete {HappyVillagerTraill::%UUID of player%}
-		delete {NoteTrail::%UUID of player%}
-		delete {EnchantTrail::%UUID of player%}
-		delete {BubbleTrail::%UUID of player%}
-		delete {SpellTrail::%UUID of player%}
-		delete {SmokeTrail::%UUID of player%}
-		delete {PortalTrail::%UUID of player%}
-		delete {FireworkTrail::%UUID of player%}
-		close player's inventory
-		send "&7Your particles have been removed. Glitching is bad."
-	if name of clicked item is "&c&nWater Arrow Trail":
-		if {WaterATrail::%UUID of player%} is not set:
-			set {WaterATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nWater Trail"
-	if name of clicked item is "&c&nRedstone Arrow Trail":
-		if {RedstoneATrail::%UUID of player%} is not set:
-			set {RedstoneATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nRedstone Trail"
-	if name of clicked item is "&c&nSlime Arrow Trail":
-		if {SlimeATrail::%UUID of player%} is not set:
-			set {SlimeATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSlime Trail"
-	if name of clicked item is "&c&nCritical Arrow Trail":
-		if {CritATrail::%UUID of player%} is not set:
-			set {CritATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nCritical Trail"
-	if name of clicked item is "&c&nHappy Villager Arrow Trail":
-		if {HappyVillagerATraill::%UUID of player%} is not set:
-			set {HappyVillagerATraill::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nHappy Villager Trail"
-	if name of clicked item is "&c&nNote Arrow Trail":
-		if {NoteATrail::%UUID of player%} is not set:
-			set {NoteATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nNote Trail"
-	if name of clicked item is "&c&nEnchant Arrow Trail":
-		if {EnchantATrail::%UUID of player%} is not set:
-			set {EnchantATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nEnchant Trail"
-	if name of clicked item is "&c&nBubble Arrow Trail":
-		if {BubbleATrail::%UUID of player%} is not set:
-			set {BubbleATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nBubble Trail"
-	if name of clicked item is "&c&nSpell Arrow Trail":
-		if {SpellATrail::%UUID of player%} is not set:
-			set {SpellATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSpell Trail"
-	if name of clicked item is "&c&nSmoke Arrow Trail":
-		if {SmokeATrail::%UUID of player%} is not set:
-			set {SmokeATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSmoke Trail"
-	if name of clicked item is "&c&nPortal Arrow Trail":
-		if {PortalATrail::%UUID of player%} is not set:
-			set {PortalATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {FireworkATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nPortal Trail"
-	if name of clicked item is "&c&nFirework Spark Arrow Trail":
-		if {FireworkATrail::%UUID of player%} is not set:
-			set {FireworkATrail::%UUID of player%} to "True"
-			delete {HeartATrail::%UUID of player%}
-			delete {FlameATrail::%UUID of player%}
-			delete {SnowATrail::%UUID of player%}
-			delete {EnderATrail::%UUID of player%}
-			delete {CloudATrail::%UUID of player%}
-			delete {LavaATrail::%UUID of player%}
-			delete {WaterATrail::%UUID of player%}
-			delete {RedstoneATrail::%UUID of player%}
-			delete {CritATrail::%UUID of player%}
-			delete {SlimeATrail::%UUID of player%}
-			delete {HappyVillagerATraill::%UUID of player%}
-			delete {NoteATrail::%UUID of player%}
-			delete {EnchantATrail::%UUID of player%}
-			delete {BubbleATrail::%UUID of player%}
-			delete {SpellATrail::%UUID of player%}
-			delete {SmokeATrail::%UUID of player%}
-			delete {PortalATrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nFirework Trail"
-			
-on shoot:
-	if {HeartATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "heart", center projectile, visibleRange 16
-			wait 3 ticks
-	if {FlameATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "flame", center projectile, visibleRange 32
-			wait 3 ticks
-	if {SnowATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "snowball", center projectile, visibleRange 32
-			wait 3 ticks
-	if {EnderATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "witchspell", center projectile, visibleRange 32
-			wait 3 ticks
-	if {CloudATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "cloud", center projectile, visibleRange 32
-			wait 3 ticks
-	if {LavaATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "lavadrip", center projectile, visibleRange 32
-			wait 3 ticks
-	if {WaterATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "waterdrip", center projectile, visibleRange 32
-			wait 3 ticks
-	if {RedstoneATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "blockcrack", material redstone block, center projectile, visibleRange 32
-			wait 3 ticks
-	if {CritATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "crit", center projectile, visibleRange 32
-			wait 3 ticks
-	if {SlimeATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "slime", center projectile, visibleRange 32
-			wait 3 ticks
-	if {HappyVillagerATraill::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "happyvillager", center projectile, visibleRange 32
-			wait 3 ticks
-	if {NoteATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "note", center projectile, visibleRange 32
-			wait 3 ticks
-	if {EnchantATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "enchantmenttable", center projectile, visibleRange 32
-			wait 3 ticks
-	if {BubbleATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "waterbubble", center projectile, visibleRange 32
-			wait 3 ticks
-	if {SpellATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "spell", center projectile, visibleRange 32
-			wait 3 ticks
-	if {SmokeATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "smoke", center projectile, visibleRange 32
-			wait 3 ticks
-	if {PortalATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "portal", center projectile, visibleRange 32
-			wait 3 ticks
-	if {FireworkATrail::%shooter%} is set:
-		loop 3 times:
-			drawDot count 10, particle "fireworkspark", center projectile, visibleRange 32
-			wait 3 ticks
-		
-command /trails:
-	trigger:
-		wait 1 tick
-		open chest with 5 rows named "Player Trails" to player
-		wait 1 tick
-		format gui slot 0 of player with 1 rose named "&a" to do nothing
-		if {HeartTrail::%UUID of player%} is set:
-			format gui slot 9 of player with 1 light green dye named "&a&nHeart Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 9 of player with 1 gray dye named "&c&nHeart Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 1 of player with 1 blaze powder named "&a" to do nothing
-		if {FlameTrail::%UUID of player%} is set:
-			format gui slot 10 of player with 1 light green dye named "&a&nFlame Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 10 of player with 1 gray dye named "&c&nFlame Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 2 of player with 1 snowball named "&a" to do nothing
-		if {SnowTrail::%UUID of player%} is set:
-			format gui slot 11 of player with 1 light green dye named "&a&nSnow Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 11 of player with 1 gray dye named "&c&nSnow Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 3 of player with 1 ender pearl named "&a" to do nothing
-		if {Ender::%UUID of player%} is set:
-			format gui slot 12 of player with 1 light green dye named "&a&nEnder Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 12 of player with 1 gray dye named "&c&nEnder Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 4 of player with 1 white dye named "&a" to do nothing
-		if {CloudTrail::%UUID of player%} is set:
-			format gui slot 13 of player with 1 light green dye named "&a&nCloud Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 13 of player with 1 gray dye named "&c&nCloud Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 5 of player with 1 lava bucket named "&a" to do nothing
-		if {LavaTrail::%UUID of player%} is set:
-			format gui slot 14 of player with 1 light green dye named "&a&nLava Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 14 of player with 1 gray dye named "&c&nLava Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 6 of player with 1 water bucket named "&a" to do nothing
-		if {WaterTrail::%UUID of player%} is set:
-			format gui slot 15 of player with 1 light green dye named "&a&nWater Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 15 of player with 1 gray dye named "&c&nWater Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 7 of player with 1 redstone named "&a" to do nothing
-		if {RedstoneTrail::%UUID of player%} is set:
-			format gui slot 16 of player with 1 light green dye named "&a&nRedstone Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 16 of player with 1 gray dye named "&c&nRedstone Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 8 of player with 1 slimeball named "&a" to do nothing
-		if {SlimeTrail::%UUID of player%} is set:
-			format gui slot 17 of player with 1 light green dye named "&a&nSlime Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 17 of player with 1 gray dye named "&c&nSlime Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 18 of player with 1 yellow stained glass pane named "&eDisable Particles" to run player command "/removeparticles" with left click
-		format gui slot 19 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 20 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 21 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 22 of player with 1 red stained glass pane named "&cBack to Cosmetics" to run player command "/cosmetics" with left click
-		format gui slot 23 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 24 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 25 of player with 1 gray stained glass pane named "&a" to do nothing
-		format gui slot 26 of player with 1 yellow stained glass pane named "&eDisable Particles" to run player command "/removeparticles" with left click
-		format gui slot 27 of player with 1 nether star named "&a" to do nothing
-		if {CritTrail::%UUID of player%} is set:
-			format gui slot 36 of player with 1 light green dye named "&a&nCritical Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 36 of player with 1 gray dye named "&c&nCritical Trail" with lore "||&7Status: &cDisabled"
-			
-		format gui slot 28 of player with 1 emerald named "&a" to do nothing
-		if {HappyVillagerTraill::%UUID of player%} is set:
-			format gui slot 37 of player with 1 light green dye named "&a&nHappy Villager Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 37 of player with 1 gray dye named "&c&nHappy Villager Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 29 of player with 1 note block named "&a" to do nothing
-		if {NoteTrail::%UUID of player%} is set:
-			format gui slot 38 of player with 1 light green dye named "&a&nNote Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 38 of player with 1 gray dye named "&c&nNote Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 30 of player with 1 enchantment table named "&a" to do nothing
-		if {EnchantTrail::%UUID of player%} is set:
-			format gui slot 39 of player with 1 light green dye named "&a&nEnchant Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 39 of player with 1 gray dye named "&c&nEnchant Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 31 of player with 1 raw fish named "&a" to do nothing
-		if {BubbleTrail::%UUID of player%} is set:
-			format gui slot 40 of player with 1 light green dye named "&a&nBubble Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 40 of player with 1 gray dye named "&c&nBubble Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 32 of player with 1 water bottle named "&a" to do nothing
-		if {SpellTrail::%UUID of player%} is set:
-			format gui slot 41 of player with 1 light green dye named "&a&nSpell Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 41 of player with 1 gray dye named "&c&nSpell Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 33 of player with 1 coal named "&a" to do nothing
-		if {SmokeTrail::%UUID of player%} is set:
-			format gui slot 42 of player with 1 light green dye named "&a&nSmoke Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 42 of player with 1 gray dye named "&c&nSmoke Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 34 of player with 1 end portal frame named "&a" to do nothing
-		if {PortalTrail::%UUID of player%} is set:
-			format gui slot 43 of player with 1 light green dye named "&a&nPortal Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 43 of player with 1 gray dye named "&c&nPortal Trail" with lore "||&7Status: &cDisabled"
-		format gui slot 35 of player with 1 firework rocket with no nbt named "&a" to do nothing
-		if {FireworkTrail::%UUID of player%} is set:
-			format gui slot 44 of player with 1 light green dye named "&a&nFirework Spark Trail" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 44 of player with 1 gray dye named "&c&nFirework Spark Trail" with lore "||&7Status: &cDisabled"
-			
-on inventory click:
-	if name of clicked item is "&c&nHeart Trail":
-		if {HeartTrail::%UUID of player%} is not set:
-			set {HeartTrail::%UUID of player%} to "True"
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nHeart Trail"
-	if name of clicked item is "&c&nFlame Trail":
-		if {FlameTrail::%UUID of player%} is not set:
-			set {FlameTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nFlame Trail"
-	if name of clicked item is "&c&nSnow Trail":
-		if {SnowTrail::%UUID of player%} is not set:
-			set {SnowTrail::%UUID of player%} to "True"
-			delete {FlameTrail::%UUID of player%}
-			delete {HeartTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSnow Trail"
-	if name of clicked item is "&c&nEnder Trail":
-		if {Ender::%UUID of player%} is not set:
-			set {Ender::%UUID of player%} to "True"
-			delete {SnowTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {HeartTrail::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nEnder Trail"
-	if name of clicked item is "&c&nCloud Trail":
-		if {CloudTrail::%UUID of player%} is not set:
-			set {CloudTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nCloud Trail"
-	if name of clicked item is "&c&nLava Trail":
-		if {LavaTrail::%UUID of player%} is not set:
-			set {LavaTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nLava Trail"
-	if name of clicked item is "&c&nWater Trail":
-		if {WaterTrail::%UUID of player%} is not set:
-			set {WaterTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nWater Trail"
-	if name of clicked item is "&c&nRedstone Trail":
-		if {RedstoneTrail::%UUID of player%} is not set:
-			set {RedstoneTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nRedstone Trail"
-	if name of clicked item is "&c&nSlime Trail":
-		if {SlimeTrail::%UUID of player%} is not set:
-			set {SlimeTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSlime Trail"
-	if name of clicked item is "&c&nCritical Trail":
-		if {CritTrail::%UUID of player%} is not set:
-			set {CritTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nCritical Trail"
-	if name of clicked item is "&c&nHappy Villager Trail":
-		if {HappyVillagerTraill::%UUID of player%} is not set:
-			set {HappyVillagerTraill::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nHappy Villager Trail"
-	if name of clicked item is "&c&nNote Trail":
-		if {NoteTrail::%UUID of player%} is not set:
-			set {NoteTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nNote Trail"
-	if name of clicked item is "&c&nEnchant Trail":
-		if {EnchantTrail::%UUID of player%} is not set:
-			set {EnchantTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nEnchant Trail"
-	if name of clicked item is "&c&nBubble Trail":
-		if {BubbleTrail::%UUID of player%} is not set:
-			set {BubbleTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nBubble Trail"
-	if name of clicked item is "&c&nSpell Trail":
-		if {SpellTrail::%UUID of player%} is not set:
-			set {SpellTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSpell Trail"
-	if name of clicked item is "&c&nSmoke Trail":
-		if {SmokeTrail::%UUID of player%} is not set:
-			set {SmokeTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nSmoke Trail"
-	if name of clicked item is "&c&nPortal Trail":
-		if {PortalTrail::%UUID of player%} is not set:
-			set {PortalTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {FireworkTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nPortal Trail"
-	if name of clicked item is "&c&nFirework Spark Trail":
-		if {FireworkTrail::%UUID of player%} is not set:
-			set {FireworkTrail::%UUID of player%} to "True"
-			delete {HeartTrail::%UUID of player%}
-			delete {FlameTrail::%UUID of player%}
-			delete {SnowTrail::%UUID of player%}
-			delete {Ender::%UUID of player%}
-			delete {CloudTrail::%UUID of player%}
-			delete {LavaTrail::%UUID of player%}
-			delete {WaterTrail::%UUID of player%}
-			delete {RedstoneTrail::%UUID of player%}
-			delete {CritTrail::%UUID of player%}
-			delete {SlimeTrail::%UUID of player%}
-			delete {HappyVillagerTraill::%UUID of player%}
-			delete {NoteTrail::%UUID of player%}
-			delete {EnchantTrail::%UUID of player%}
-			delete {BubbleTrail::%UUID of player%}
-			delete {SpellTrail::%UUID of player%}
-			delete {SmokeTrail::%UUID of player%}
-			delete {PortalTrail::%UUID of player%}
-			close player's inventory
-			send "&7You have selected the &a&nFirework Trail"
-	if lore of clicked item is "||&7Status: &aEnabled":
-		delete {HeartTrail::%UUID of player%}
-		delete {FlameTrail::%UUID of player%}
-		delete {SnowTrail::%UUID of player%}
-		delete {Ender::%UUID of player%}
-		delete {CloudTrail::%UUID of player%}
-		delete {LavaTrail::%UUID of player%}
-		delete {WaterTrail::%UUID of player%}
-		delete {RedstoneTrail::%UUID of player%}
-		delete {CritTrail::%UUID of player%}
-		delete {SlimeTrail::%UUID of player%}
-		delete {HappyVillagerTraill::%UUID of player%}
-		delete {NoteTrail::%UUID of player%}
-		delete {EnchantTrail::%UUID of player%}
-		delete {BubbleTrail::%UUID of player%}
-		delete {SpellTrail::%UUID of player%}
-		delete {SmokeTrail::%UUID of player%}
-		delete {PortalTrail::%UUID of player%}
-		close player's inventory
-		
-on any move:
-	if {HeartTrail::%UUID of player%} is set:
-		show 3 "heart" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {FlameTrail::%UUID of player%} is set:
-		show 3 "flame" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {SnowTrail::%UUID of player%} is set:
-		show 3 "snowball" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {Ender::%UUID of player%} is set:
-		show 3 "spell witch" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {CloudTrail::%UUID of player%} is set:
-		show 3 "cloud" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {LavaTrail::%UUID of player%} is set:
-		show 3 "drip lava" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {WaterTrail::%UUID of player%} is set:
-		show 3 "drip water" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {RedstoneTrail::%UUID of player%} is set:
-		show 3 "redstone" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {CritTrail::%UUID of player%} is set:
-		show 3 "crit" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {SlimeTrail::%UUID of player%} is set:
-		show 3 "slime" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {HappyVillagerTraill::%UUID of player%} is set:
-		show 3 "villager happy" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {NoteTrail::%UUID of player%} is set:
-		show 3 "note" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {EnchantTrail::%UUID of player%} is set:
-		show 3 "enchantment table" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {BubbleTrail::%UUID of player%} is set:
-		show 3 "water bubble" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {SpellTrail::%UUID of player%} is set:
-		show 3 "spell" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {SmokeTrail::%UUID of player%} is set:
-		show 3 "smoke normal" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {PortalTrail::%UUID of player%} is set:
-		show 3 "portal" particles at location of player for player offset by 0.4, 0.6, 0.4
-	if {FireworkTrail::%UUID of player%} is set:
-		show 3 "fireworks spark" particles at location of player for player offset by 0.4, 0.6, 0.4
-		
 command /removeparticles:
 	trigger:
 		close player's inventory
@@ -5264,11 +3917,6 @@ command /removeparticles:
 		delete {SmokeTrail::%UUID of player%}
 		delete {PortalTrail::%UUID of player%}
 		delete {FireworkTrail::%UUID of player%}
-		
-command /removearrowparticles:
-	trigger:
-		close player's inventory
-		send "&7You removed your current particles"
 		delete {HeartATrail::%UUID of player%}
 		delete {FlameATrail::%UUID of player%}
 		delete {SnowATrail::%UUID of player%}
@@ -5361,7 +4009,7 @@ command /ping [<player>]:
 			send "&7Your ping is &a%{_Ping}%"
 		else:
 			set {_Ping} to arg-1's ping
-			send "&a%UUID of arg-1%'s &7ping is &a%{_Ping}%"	 
+			send "&a%arg-1%'s &7ping is &a%{_Ping}%"	 
 			
 command /createleaderboard:
 	permission: kitpvp.createleaderboard
@@ -5943,115 +4591,3 @@ command /toplevels:
 		message "&c9. &f%{_9th}% &7- &e%{_9th.levels}%"
 		message "&c10. &f%{_10th}% &7- &e%{_10th.levels}%"		
 		
-		
-command /dailyrewards:
-	aliases: /dr
-	trigger:
-		wait 1 tick
-		open chest with 1 row named "Daily Rewards" to player
-		if {DailyReward::%UUID of player%} is not set:
-			format gui slot 0 of player with 1 342 named "&aDaily Reward" with lore "||&6Reward: &a5 XP||||&eClick to redeem"
-		else:
-			format gui slot 0 of player with 1 328 named "&cDaily Reward" with lore "||&eThis reward is currently on a cooldown"
-		if {WeeklyReward::%UUID of player%} is not set:
-			format gui slot 1 of player with 1 342 named "&aWeekly Reward" with lore "||&6Reward: &a15 XP||&6Reward: &e3 Coins||||&eClick to redeem"
-		else:
-			format gui slot 1 of player with 1 328 named "&cWeekly Reward" with lore "||&eThis reward is currently on a cooldown"
-		if {MonthlyReward::%UUID of player%} is not set:
-			format gui slot 2 of player with 1 342 named "&aMonthly Reward" with lore "||&6Reward: &a25 XP||&6Reward: &e5 Coins||||&eClick to redeem"
-		else:
-			format gui slot 2 of player with 1 328 named "&cMonthly Reward" with lore "||&eThis reward is currently on a cooldown"
-		if {MonthlyDonorReward::%UUID of player%} is not set:
-			format gui slot 6 of player with 1 ender chest named "&aMonthly Donor Reward" with lore "||&6Reward: &a35 XP||&6Reward: &e10 Coins||||&eClick to redeem"
-		else:
-			format gui slot 6 of player with 1 328 named "&cMonthly Donor Reward" with lore "||&eThis reward is currently on a cooldown"
-		format gui slot 3 of player with 1 gray stained glass pane named "&7" to do nothing
-		format gui slot 4 of player with 1 gray stained glass pane named "&7" to do nothing
-		format gui slot 5 of player with 1 gray stained glass pane named "&7" to do nothing
-		format gui slot 7 of player with 1 gray dye named "&cComing Soon" to do nothing
-		format gui slot 8 of player with 1 gray dye named "&cComing Soon" to do nothing
-			
-on inventory click:
-	if name of clicked item is "&aDaily Reward":
-		if {_Waited} is not set:
-			set {_Waited} to difference between {DailyReward::%UUID of player%} and now
-			if {_Waited} is less than 1 Day:
-				send "&7You must wait &6%difference between {_Waited} and 1 day%"
-				stop
-			else:
-				close player's inventory
-				set {_loc} to location of player's head
-				play "ORB_PICKUP" to player at volume 1
-				add 5 to {XPupgradepoints::%UUID of player%}
-				send "&eYou have successfully claimed your reward of &a5 XP"
-				set {DailyReward::%UUID of player%} to now
-	if name of clicked item is "&aWeekly Reward":
-		if {_Waited} is not set:
-			set {_Waited} to difference between {WeeklyReward::%UUID of player%} and now
-			if {_Waited} is less than 7 days:
-				close player's inventory
-				play "ANVIL_BREAK" to player at volume 1
-				send "&7You must wait &6%difference between {_Waited} and 7 days%"
-				stop
-			else:
-				close player's inventory
-				set {_loc} to location of player's head
-				play "ORB_PICKUP" to player at volume 1
-				add 15 to {XPupgradepoints::%UUID of player%}
-				add 3 to {upgradepoints::%UUID of player%}
-				send "&eYou have successfully claimed your reward of &a15 XP &eand 3 Coins"
-				set {WeeklyReward::%UUID of player%} to now
-	if name of clicked item is "&aMonthly Reward":
-		if {_Waited} is not set:
-			set {_Waited} to difference between {MonthlyReward::%UUID of player%} and now
-			if {_Waited} is less than 31 days:
-				close player's inventory
-				play "ANVIL_BREAK" to player at volume 1
-				send "&7You must wait &6%difference between {_Waited} and 31 days%"
-				stop
-			else:
-				close player's inventory
-				set {_loc} to location of player's head
-				play "ORB_PICKUP" to player at volume 1
-				add 25 to {XPupgradepoints::%UUID of player%}
-				send "&eYou have successfully claimed your reward of &a25 XP &eand 5 Coins"
-				set {MonthlyReward::%UUID of player%} to now
-	if name of clicked item is "&aMonthly Donor Reward":
-		if player has permission "rewards.monthlydonoraward":
-			if {_Waited} is not set:
-				set {_Waited} to difference between {MonthlyDonorReward::%UUID of player%} and now
-				if {_Waited} is less than 31 days:
-					close player's inventory
-					play "ANVIL_BREAK" to player at volume 1
-					send "&7You must wait &6%difference between {_Waited} and 31 days%"
-					stop
-				else:
-					close player's inventory
-					set {_loc} to location of player's head
-					play "ORB_PICKUP" to player at volume 1
-					add 35 to {XPupgradepoints::%UUID of player%}
-					add 10 to {upgradepoints::%UUID of player%}
-					send "&eYou have successfully claimed your reward of &a40 XP &eand &e10 Coins"
-					set {MonthlyDonorReward::%UUID of player%} to now
-		else:
-			close player's inventory
-			send "&cYou must be a donor rank to redeem this"
-			send "&7Purchase a rank on the store using &6/buy"
-			
-		
-	if name of clicked item is "&cDaily Reward":
-		close player's inventory
-		play "ANVIL_BREAK" to player at volume 1
-		send "&cThis Reward is currently on a cooldown"
-	if name of clicked item is "&cWeekly Reward":
-		close player's inventory
-		play "ANVIL_BREAK" to player at volume 1
-		send "&cThis Reward is currently on a cooldown"
-	if name of clicked item is "&cMonthly Reward":
-		close player's inventory
-		play "ANVIL_BREAK" to player at volume 1
-		send "&cThis Reward is currently on a cooldown"
-	if name of clicked item is "&cMonthly Donor Reward":
-		close player's inventory
-		play "ANVIL_BREAK" to player at volume 1
-		send "&cThis Reward is currently on a cooldown"
