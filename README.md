@@ -27,7 +27,7 @@
 
 
 # Kits
-- [ ] Farmer Kit
+- [ ] Farmer Kit (300 COINS)
 - [ ] Spider Kit
 - [ ] Assassin Kit
 - [ ] Miner Kit
