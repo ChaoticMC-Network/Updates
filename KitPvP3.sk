@@ -1049,133 +1049,70 @@ command /kit [<text>]:
 				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "previewkit vampire" with right click
 		if arg-1 is "Basic":
 			player has permission "kit.Basic":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Basic"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 fire charge named "&cBerserk &f(Right Click)" with lore "||&fAbility: &aBerserk||||&eDouble your next attack dmg||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBasic Helmet"
-					equip player with iron chestplate named "&eBasic Chestplate"
-					equip player with iron leggings named "&eBasic Leggings"
-					equip player with iron boots named "&eBasic Boots"
-					set {BasicGear::*} to player's helmet, chestplate, leggings, and boots
-					set {BasicItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &fBasic Kit"
-				else:
-					set {Class::%UUID of player%} to "Basic"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 fire charge named "&cBerserk &f(Right Click)" with lore "||&fAbility: &aBerserk||||&eDouble your next attack dmg||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 Mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBasic Helmet"
-					equip player with iron chestplate named "&eBasic Chestplate"
-					equip player with iron leggings named "&eBasic Leggings"
-					equip player with iron boots named "&eBasic Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &fBasic Kit"
+				set {Class::%UUID of player%} to "Basic"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 fire charge named "&cBerserk &f(Right Click)" with lore "||&fAbility: &aBerserk||||&eDouble your next attack dmg||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eBasic Helmet"
+				equip player with iron chestplate named "&eBasic Chestplate"
+				equip player with iron leggings named "&eBasic Leggings"
+				equip player with iron boots named "&eBasic Boots"
+				set {BasicGear::*} to player's helmet, chestplate, leggings, and boots
+				set {BasicItems::*} to items in player's inventory
+				send "&7You selected the &fBasic Kit"
 			else:
 				play "VILLAGER_NO" to player at volume 1
 				send "&7You do not have the &f&nBasic Kit&r &7unlocked"
 		if arg-1 is "Blaziken":
 			player has permission "kit.blaziken":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Blaziken"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
-					set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Inferno &f(Right Click)" with lore "||&fAbility: &aBlazing Inferno||||&eBurn Nearby Players||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBlaziken Helmet"
-					equip player with iron chestplate named "&eBlaziken Chestplate"
-					equip player with iron leggings named "&eBlaziken Leggings"
-					equip player with iron boots named "&eBlaziken Boots"
-					set {BlazikenGear::*} to player's helmet, chestplate, leggings, and boots
-					set {BlazikenItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &6Blaziken Kit"
-				else:
-					set {Class::%UUID of player%} to "Blaziken"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
-					set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Inferno &f(Right Click)" with lore "||&fAbility: &aBlazing Inferno||||&eBurn Nearby Players||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBlaziken Helmet"
-					equip player with iron chestplate named "&eBlaziken Chestplate"
-					equip player with iron leggings named "&eBlaziken Leggings"
-					equip player with iron boots named "&eBlaziken Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &6Blaziken Kit"
+				set {Class::%UUID of player%} to "Blaziken"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
+				set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Inferno &f(Right Click)" with lore "||&fAbility: &aBlazing Inferno||||&eBurn Nearby Players||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eBlaziken Helmet"
+				equip player with iron chestplate named "&eBlaziken Chestplate"
+				equip player with iron leggings named "&eBlaziken Leggings"
+				equip player with iron boots named "&eBlaziken Boots"
+				set {BlazikenGear::*} to player's helmet, chestplate, leggings, and boots
+				set {BlazikenItems::*} to items in player's inventory
+				send "&7You have selected the &6Blaziken Kit"
 			else:
 				play "VILLAGER_NO" to player at volume 1
 				send "&7You don't have the &6&nBlaziken Kit&r &7unlocked"
 		if arg-1 is "Archer":
 			player has permission "kit.archer":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Archer"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
-					set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Arrows &f(Right Click)" with lore "||&fAbility: &aBlazing Arrows||||&eShoot Flame Arrows||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eArcher Helmet"
-					equip player with iron chestplate named "&eArcher Chestplate"
-					equip player with iron leggings named "&eArcher Leggings"
-					equip player with iron boots named "&eArcher Boots"
-					set {ArcherGear::*} to player's helmet, chestplate, leggings, and boots
-					set {ArcherItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &9Archer Kit"
-				else:
-					set {Class::%UUID of player%} to "Archer"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
-					set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Arrows &f(Right Click)" with lore "||&fAbility: &aBlazing Arrows||||&eShoot Flame Arrows||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eArcher Helmet"
-					equip player with iron chestplate named "&eArcher Chestplate"
-					equip player with iron leggings named "&eArcher Leggings"
-					equip player with iron boots named "&eArcher Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &9Archer Kit"
+				set {Class::%UUID of player%} to "Archer"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Planks"
+				set slot 4 of player's inventory to 1 blaze powder named "&6Blazing Arrows &f(Right Click)" with lore "||&fAbility: &aBlazing Arrows||||&eShoot Flame Arrows||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eArcher Helmet"
+				equip player with iron chestplate named "&eArcher Chestplate"
+				equip player with iron leggings named "&eArcher Leggings"
+				equip player with iron boots named "&eArcher Boots"
+				set {ArcherGear::*} to player's helmet, chestplate, leggings, and boots
+				set {ArcherItems::*} to items in player's inventory
+				send "&7You selected the &9Archer Kit"
 			else:
 				play "VILLAGER_NO" to player at volume 1
 				send "&7You don't have the &9&nArcher Kit&r &7unlocked"
