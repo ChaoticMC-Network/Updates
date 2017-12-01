@@ -60,3 +60,4 @@
 - [X] Removed /DefaultKit, yet /autoKit is still a feature only for staff members
 - [X] You cannot craft crafting tables
 - [X] Fixed Glitch where you could place down the Enchantment Table in the Enchanter Kit
+- [X] Removed Player Tracker permanantley from Kits
