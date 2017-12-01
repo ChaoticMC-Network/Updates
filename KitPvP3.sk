@@ -167,40 +167,7 @@ on first join:
 	set {Killstreak::%UUID of player%} to "0"
 	set {JoinMessages::%UUID of player%} to "True"
 	set {XPupgradepoints::%UUID of player%} to "0"
-	set {upgradepoints::%UUID of player%} to "0"
-
-on join:
-	delete {PreviewMode::%UUID of player%}
-	if {JoinMessages::%UUID of player%} is not set:
-		set join message to ""
-	else:
-		set join message to ""
-		broadcast "&7[&a+&7] &b%player%"
-	delete {HeartTrail::%UUID of player%}
-	delete {FlameTrail::%UUID of player%}
-	delete {SnowTrail::%UUID of player%}
-	delete {Ender::%UUID of player%}
-	delete {CloudTrail::%UUID of player%}
-	delete {LavaTrail::%UUID of player%}
-	delete {WaterTrail::%UUID of player%}
-	delete {RedstoneTrail::%UUID of player%}
-	delete {CritTrail::%UUID of player%}
-	delete {SlimeTrail::%UUID of player%}
-	delete {HappyVillagerTraill::%UUID of player%}
-	delete {NoteTrail::%UUID of player%}
-	delete {EnchantTrail::%UUID of player%}
-	delete {BubbleTrail::%UUID of player%}
-	delete {SpellTrail::%UUID of player%}
-	delete {SmokeTrail::%UUID of player%}
-	delete {PortalTrail::%UUID of player%}
-	delete {FireworkTrail::%UUID of player%}
-	
-on quit:
-	if {LeaveMessages::%UUID of player%} is not set:
-		set leave message to ""
-	else:
-		set leave message to ""
-		broadcast "&7[&c-&7] &c%player%"		
+	set {upgradepoints::%UUID of player%} to "0"	
 
 command /resetlevels:
 	permission: kitpvp.resetlevels
@@ -258,65 +225,82 @@ on quit:
 	delete {FireworkTrail::%UUID of player%}		
 	
 on join:
-	wait 1 tick
-	wipe player's sidebar
-	set name of sidebar of player to "&c&lKitPvP"
-	set score "&3 " in sidebar of player to 13
-	set score "&fName: &c%player%" in sidebar of player to 12
-	set score "&fKit: &a%{Class::%UUID of player%}%" in sidebar of player to 11
-	set score "&2 " in sidebar of player to 10
-	set score "&fKills: &a%{Kills::%UUID of player%}%" in sidebar of player to 9
-	set score "&fDeaths: &c%{Deaths::%UUID of player%}%" in sidebar of player to 8
-	set score "&0 " in sidebar of player to 7
-	set score "&fKDR: &6%{KDR::%UUID of player%}%" in sidebar of player to 6
-	set score "&fStreak: &6%{streak::%UUID of player%}%" in sidebar of player to 5
-	set score "&8" in sidebar of player to 4
-	set score "&fXP: &a%{XPupgradepoints::%UUID of player%}%" in sidebar of player to 3
-	set score "&fCoins: &e%{upgradepoints::%UUID of player%}%" in sidebar of player to 2
-	set score "&8 " in sidebar of player to 1
-	set score "&echaoticnet.pro" in sidebar of player to 0
+	if {AbilityCooldown::%player%} is not set:
+		wait 1 tick
+		wipe player's sidebar
+		set name of sidebar of player to "&c&lKitPvP"
+		set score "&2 " in sidebar of player to 9
+		set score "&fKills: &a%{Kills::%UUID of player%}%" in sidebar of player to 8
+		set score "&fDeaths: &c%{Deaths::%UUID of player%}%" in sidebar of player to 7
+		set score "&0 " in sidebar of player to 6
+		set score "&fKDR: &6%{KDR::%UUID of player%}%" in sidebar of player to 5
+		set score "&fStreak: &6%{streak::%UUID of player%}%" in sidebar of player to 4
+		set score "&8" in sidebar of player to 3
+		set score "&fCoins: &e%{upgradepoints::%UUID of player%}%" in sidebar of player to 2
+		set score "&8 " in sidebar of player to 1
+		set score "&eChaoticMC.Net" in sidebar of player to 0	
+
+every second in world "World":
+	loop all players:
+		if {AbilityCooldown::%loop-player%} is set:
+			remove 1 from {AbilityCooldown::%loop-player%}
+			if {AbilityCooldown::%loop-player%} is 0:
+				delete {AbilityCooldown::%loop-player%}
+				send "&eYou can use your ability" to loop-player
+				play "SUCCESSFUL_HIT" to loop-player at volume 1
 
 on join:
-	wait 15 ticks
-	while player is online:
+	set name of sidebar of player to "&c&lKitPvP"
+	wait 5 seconds
+	set name of sidebar of player to "&4&lK&c&litPvP"
+	wait 3 ticks
+	set name of sidebar of player to "&c&lK&4&li&c&ltPvP"
+	wait 3 ticks
+	set name of sidebar of player to "&c&lKi&4&lt&c&lPvP"
+	wait 3 ticks
+	set name of sidebar of player to "&c&lKit&4&lP&c&lvP"
+	wait 3 ticks
+	set name of sidebar of player to "&c&lKitPv&4&lP"
+	wait 3  ticks
+	set name of sidebar of player to "&c&lKitPvP"
+	wait 17 ticks
+	loop 6 times:
 		set name of sidebar of player to "&c&lKitPvP"
-		wait 5 seconds
-		set name of sidebar of player to "&4&lK&c&litPvP"
-		wait 3 ticks
-		set name of sidebar of player to "&c&lK&4&li&c&ltPvP"
-		wait 3 ticks
-		set name of sidebar of player to "&c&lKi&4&lt&c&lPvP"
-		wait 3 ticks
-		set name of sidebar of player to "&c&lKit&4&lP&c&lvP"
-		wait 3 ticks
-		set name of sidebar of player to "&c&lKitPv&4&lP"
-		wait 3  ticks
-		set name of sidebar of player to "&c&lKitPvP"
-		wait 17 ticks
-		loop 6 times:
-			set name of sidebar of player to "&c&lKitPvP"
-			wait 4 ticks
-			set name of sidebar of player to "&4&lKitPvP"
-			wait 4 ticks
-			
-every 3 seconds:
+		wait 4 ticks
+		set name of sidebar of player to "&4&lKitPvP"
+		wait 4 ticks
+	
+
+	
+every second in world "World":
 	loop all players:
-		wipe loop-player's sidebar
-		set name of sidebar of loop-player to "&c&lKitPvP"  
-		set score "&3 " in sidebar of loop-player to 13
-		set score "&fName: &c%loop-player%" in sidebar of loop-player to 12
-		set score "&fKit: &a%{Class::%UUID of loop-player%}%" in sidebar of loop-player to 11
-		set score "&2 " in sidebar of loop-player to 10
-		set score "&fKills: &a%{kills::%UUID of loop-player%}%" in sidebar of loop-player to 9
-		set score "&fDeaths: &c%{deaths::%UUID of loop-player%}%" in sidebar of loop-player to 8
-		set score "&0 " in sidebar of loop-player to 7
-		set score "&fKDR: &6%{KDR::%UUID of loop-player%}%" in sidebar of loop-player to 6
-		set score "&fKillstreak: &6%{streak::%UUID of loop-player%}%" in sidebar of loop-player to 5
-		set score "&5 " in sidebar of loop-player to 4
-		set score "&fXP: &a%{XPUpgradepoints::%UUID of loop-player%}%" in sidebar of loop-player to 3
-		set score "&fCoins: &e%{upgradepoints::%UUID of loop-player%}%" in sidebar of loop-player to 2
-		set score "&8 " in sidebar of loop-player to 1
-		set score "&echaoticnet.pro" in sidebar of loop-player to 0   
+		if {AbilityCooldown::%loop-player%} is not set:
+			wipe loop-player's sidebar
+			set name of sidebar of loop-player to "&c&lKitPvP"  
+			set score "&2 " in sidebar of loop-player to 9
+			set score "&fKills: &a%{kills::%UUID of loop-player%}%" in sidebar of loop-player to 8
+			set score "&fDeaths: &c%{deaths::%UUID of loop-player%}%" in sidebar of loop-player to 7
+			set score "&0 " in sidebar of loop-player to 6
+			set score "&fKDR: &6%{KDR::%UUID of loop-player%}%" in sidebar of loop-player to 5
+			set score "&fKillstreak: &6%{streak::%UUID of loop-player%}%" in sidebar of loop-player to 4
+			set score "&5 " in sidebar of loop-player to 3
+			set score "&fCoins: &e%{upgradepoints::%UUID of loop-player%}%" in sidebar of loop-player to 2
+			set score "&8 " in sidebar of loop-player to 1
+			set score "&eChaoticMC.Net" in sidebar of loop-player to 0  
+		else:
+			wipe loop-player's sidebar
+			set name of sidebar of loop-player to "&c&lKitPvP"  
+			set score "&2 " in sidebar of loop-player to 10
+			set score "&fKills: &a%{kills::%UUID of loop-player%}%" in sidebar of loop-player to 9
+			set score "&fDeaths: &c%{deaths::%UUID of loop-player%}%" in sidebar of loop-player to 8
+			set score "&0 " in sidebar of loop-player to 7
+			set score "&fKDR: &6%{KDR::%UUID of loop-player%}%" in sidebar of loop-player to 6
+			set score "&fKillstreak: &6%{streak::%UUID of loop-player%}%" in sidebar of loop-player to 5
+			set score "&5 " in sidebar of loop-player to 4
+			set score "&fCooldown: &a%{AbilityCooldown::%loop-player%}%s" in sidebar of loop-player to 3
+			set score "&fCoins: &e%{upgradepoints::%UUID of loop-player%}%" in sidebar of loop-player to 2
+			set score "&8 " in sidebar of loop-player to 1
+			set score "&eChaoticMC.Net" in sidebar of loop-player to 0   
 				
 on player respawn:
 	wait 8 ticks
@@ -430,25 +414,6 @@ command /stats [<offline player>]:
 				format gui slot 0 of player with ("%arg-1%" parsed as offline player)'s skull named "&c%arg-1%'s Stats" with lore "||&fXP: &a%{XPupgradepoints::%UUID of arg-1%}%||&fCoins: &e%{upgradepoints::%UUID of arg-1%}%" to close
 				format gui slot 2 of player with 1 book named "&cPvP Stats" with lore "||&fKills: &a%{Kills::%UUID of arg-1%}%||&fDeaths: &c%{Deaths::%UUID of arg-1%}%||||&fKDR: &6%{KDR::%UUID of arg-1%}%||&fStreak: &6%{Streak::%UUID of arg-1%}%%%||||&fAim Ratio: &b%{SwingRatio::%UUID of arg-1%}%%%||&fArrow Accuracy: &b%{ArrowRatio::%UUID of arg-1%}%%%" to close
 				format gui slot 8 of player with 1 barrier named "&cClose Menu" to close
-				
-command /settings:
-	description: Settings Command
-	trigger:
-		wait 1 tick
-		open chest with 1 row named "&nSettings Menu" to player
-		wait 2 ticks
-		if {JoinMessages::%UUID of player%} is set:
-			format gui slot 0 of player with 1 light green dye named "&eJoin Messages" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 0 of player with 1 gray dye named "&eJoin Messages" with lore "||&7Status: &cDisabled"
-		if {LeaveMessages::%UUID of player%} is set:
-			format gui slot 1 of player with 1 light green dye named "&eLeave Messages" with lore "||&7Status: &aEnabled"
-		else:
-			format gui slot 1 of player with 1 gray dye named "&eLeave Messages" with lore "||&7Status: &cDisabled"
-		format gui slot 4 of player with 1 gray dye named "&cComing Soon" to close
-		format gui slot 5 of player with 1 gray dye named "&cComing Soon" to close
-		format gui slot 6 of player with 1 gray dye named "&cComing Soon" to close
-		format gui slot 8 of player with 1 barrier named "&cClose Menu" to close
 		
 on block place of player head:
 	cancel event
@@ -919,149 +884,79 @@ command /kit [<text>]:
 				format gui slot 49 of player with ("%player%" parsed as offline player)'s skull named "&e&nYour Stats" with lore "||&e★ &fKills ➟ &a%{Kills::%UUID of player%}%||&e★ &fDeaths ➟ &c%{Deaths::%UUID of player%}%||&e★ &fKDR ➟ &6%{KDR::%UUID of player%}%||&e★ &fKillstreak ➟ &6%{Streak::%UUID of player%}%||||&eClick to view your profile" to run player command "/profile" with left click
 				format slot 45 of player with gray stained glass pane named "&7" to close
 			if player has permission "kit.basic":
-				wait 1 tick
 				format gui slot 9 of player with 1 iron sword named "&a&nBasic Kit" with lore "||&7★ &fType: &7Starter||&7★ &fAbility: &7Berserk||||&eClick to Select" to run player command "/kit Basic" with left click
-				format gui slot 9 of player with 1 iron sword named "&a&nBasic Kit" with lore "||&7★ &fType: &7Starter||&7★ &fAbility: &7Berserk||||&eClick to Select" to run player command "/previewkit Basic" with right click
 			else:
-				wait 1 tick
 				format gui slot 9 of player with 1 gray dye named "&c&nBasic Kit" with lore "||&c★ &fType: &7Starter||&c★ &fAbility: &7None||||&7You don't have this kit unlocked" to run player command "/n149c" with left click
-				format gui slot 9 of player with 1 gray dye named "&c&nBasic Kit" with lore "||&c★ &fType: &7Starter||&c★ &fAbility: &7None||||&7You don't have this kit unlocked" to run player command "/previewkit Basic" with right click
 			if player has permission "kit.archer":
-				wait 1 tick
 				format gui slot 10 of player with 1 bow named "&a&nArcher Kit" with lore "||&7★ &fType: &7Ranged||&7★ &fAbility: &7Blazing Arrows||||&eClick to Select" to run player command "/kit Archer" with left click
-				format gui slot 10 of player with 1 bow named "&a&nArcher Kit" with lore "||&7★ &fType: &7Ranged||&7★ &fAbility: &7Blazing Arrows||||&eClick to Select" to run player command "/previewkit Archer" with right click
 			else:
-				wait 1 tick
 				format gui slot 10 of player with 1 gray dye named "&c&nArcher Kit" with lore "||&c★ &fType: &7Ranged||&c★ &fAbility: &7Blazing Arrows||||&7You don't have this kit unlocked" to run player command "n149c" with left click
-				format gui slot 10 of player with 1 gray dye named "&c&nArcher Kit" with lore "||&c★ &fType: &7Ranged||&c★ &fAbility: &7Blazing Arrows||||&7You don't have this kit unlocked" to run player command "previewkit Archer" with right click
 			if player has permission "kit.blaziken":
-				wait 1 tick
 				format gui slot 11 of player with 1 blaze powder named "&a&nBlaziken Kit" with lore "||&7★ &fType: &7Pyro||&7★ &fAbility: &7Blazing Inferno||||&eClick to Select" to run player command "/kit Blaziken" with left click
-				format gui slot 11 of player with 1 blaze powder named "&a&nBlaziken Kit" with lore "||&7★ &fType: &7Pyro||&7★ &fAbility: &7Blazing Inferno||||&eClick to Select" to run player command "/previewkit Blaziken" with right click
 			else:
-				wait 1 tick
 				format gui slot 11 of player with 1 gray dye named "&c&nBlaziken Kit" with lore "||&c★ &fType: &7Pyro||&c★ &fAbility: &7Combustion||||&c★ &fCost: &e20 ❂||||&7Left click to purchase this kit" to run player command "purchasekit blaziken" with left click
-				format gui slot 11 of player with 1 gray dye named "&c&nBlaziken Kit" with lore "||&c★ &fType: &7Pyro||&c★ &fAbility: &7Combustion||||&c★ &fCost: &e20 ❂||||&7Left click to purchase this kit" to run player command "previewkit Blaziken" with right click
 			if player has permission "kit.scout":
-				wait 1 tick
 				format gui slot 12 of player with 1 potion:16386 with no nbt named "&a&nScout Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Adrenaline||||&eClick to Select" to run player command "/kit Scout" with left click
-				format gui slot 12 of player with 1 potion:16386 with no nbt named "&a&nScout Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Adrenaline||||&eClick to Select" to run player command "/previewkit Scout" with right click
 			else:
-				wait 1 tick
 				format gui slot 12 of player with 1 gray dye named "&c&nScout Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Adrenaline||||&c★ &fCost: &e18 ❂||||&7Left click to purchase this kit" to run player command "purchasekit scout" with left click
-				format gui slot 12 of player with 1 gray dye named "&c&nScout Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Adrenaline||||&c★ &fCost: &e18 ❂||||&7Left click to purchase this kit" to run player command "previewkit Scout" with right click
 			if player has permission "kit.medic":
-				wait 1 tick
 				format gui slot 13 of player with 1 red dye with no nbt named "&a&nMedic Kit" with lore "||&7★ &fType: &7Support||&7★ &fAbility: &7Healing Current||||&eClick to Select" to run player command "/kit Medic" with left click
-				format gui slot 13 of player with 1 red dye with no nbt named "&a&nMedic Kit" with lore "||&7★ &fType: &7Support||&7★ &fAbility: &7Healing Current||||&eClick to Select" to run player command "/previewkit Medic" with right click
 			else:
-				wait 1 tick
 				format gui slot 13 of player with 1 gray dye named "&c&nMedic Kit" with lore "||&c★ &fType: &7Support||&c★ &fAbility: &7Healing Current||||&c★ &fCost: &e15 ❂||||&7Left click to purchase this kit" to run player command "purchasekit medic" with left click
-				format gui slot 13 of player with 1 gray dye named "&c&nMedic Kit" with lore "||&c★ &fType: &7Support||&c★ &fAbility: &7Healing Current||||&c★ &fCost: &e15 ❂||||&7Left click to purchase this kit" to run player command "previewkit Medic" with right click
 			if player has permission "kit.TNT":
-				wait 1 tick
 				format gui slot 14 of player with 1 TNT named "&a&nTNT Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7Detonate||||&eClick to Select" to run player command "/kit TNT" with left click
-				format gui slot 14 of player with 1 TNT named "&a&nTNT Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7Detonate||||&eClick to Select" to run player command "/previewkit TNT" with right click
 			else:
-				wait 1 tick
 				format gui slot 14 of player with 1 gray dye named "&c&nTNT Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7Detonate||||&c★ &fCost: &e23 ❂||||&7Left click to purchase this kit" to run player command "purchasekit TNT" with left click
-				format gui slot 14 of player with 1 gray dye named "&c&nTNT Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7Detonate||||&c★ &fCost: &e23 ❂||||&7Left click to purchase this kit" to run player command "previewkit TNT" with right click
 			if player has permission "kit.ghost":
-				wait 1 tick
 				format gui slot 15 of player with 1 ghast tear named "&a&nGhost Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Phantom Drive||||&eClick to Select" to run player command "/kit Ghost" with left click
-				format gui slot 15 of player with 1 ghast tear named "&a&nGhost Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Phantom Drive||||&eClick to Select" to run player command "/previewkit Ghost" with right click
 			else:
-				wait 1 tick
 				format gui slot 15 of player with 1 gray dye named "&c&nGhost Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Phantom Drive||||&c★ &fCost: &e20 ❂||||&7Left click to purchase this kit" to run player command "purchasekit ghost" with left click
-				format gui slot 15 of player with 1 gray dye named "&c&nGhost Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Phantom Drive||||&c★ &fCost: &e20 ❂||||&7Left click to purchase this kit" to run player command "previewkit Ghost" with right click
 			if player has permission "kit.kangaroo":
-				wait 1 tick
 				format gui slot 16 of player with 1 feather named "&a&nKangaroo Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Leap||||&eClick to Select" to run player command "/kit Kangaroo" with left click
-				format gui slot 16 of player with 1 feather named "&a&nKangaroo Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Leap||||&eClick to Select" to run player command "/previewkit Kangaroo" with right click
 			else:
-				wait 1 tick
+				wai 1 tick
 				format gui slot 16 of player with 1 gray dye named "&c&nKangaroo Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Leap||||&c★ &fCost: &e25 ❂||||&7Left click to purchase this kit" to run player command "purchasekit kangaroo" with left click
-				format gui slot 16 of player with 1 gray dye named "&c&nKangaroo Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Leap||||&c★ &fCost: &e25 ❂||||&7Left click to purchase this kit" to run player command "previewkit Kangaroo" with right click
 			if player has permission "kit.enderman":
-				wait 1 tick
 				format gui slot 17 of player with 1 ender pearl named "&a&nEnderman Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Teleport||||&eClick to Select" to run player command "/kit Enderman" with left click
-				format gui slot 17 of player with 1 ender pearl named "&a&nEnderman Kit" with lore "||&7★ &fType: &7Agile||&7★ &fAbility: &7Teleport||||&eClick to Select" to run player command "/previewkit Enderman" with right click
 			else:
-				wait 1 tick
 				format gui slot 17 of player with 1 gray dye named "&c&nEnderman Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Teleport||||&c★ &fCost: &e28 ❂||||&7Left click to purchase this kit" to run player command "purchasekit enderman" with left click
-				format gui slot 17 of player with 1 gray dye named "&c&nEnderman Kit" with lore "||&c★ &fType: &7Agile||&c★ &fAbility: &7Teleport||||&c★ &fCost: &e28 ❂||||&7Left click to purchase this kit" to run player command "previewkit Enderman" with right click
 			if player has permission "kit.hulk":
-				wait 1 tick
 				format gui slot 18 of player with 1 stone axe named "&a&nHulk Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7Ground Slam||||&eClick to Select" to run player command "/kit Hulk" with left click
-				format gui slot 18 of player with 1 stone axe named "&a&nHulk Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7Ground Slam||||&eClick to Select" to run player command "/previewkit Hulk" with right click
 			else:
-				wait 1 tick
 				format gui slot 18 of player with 1 gray dye named "&c&nHulk Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7Ground Slam||||&c★ &fCost: &e22 ❂||||&7Left click to purchase this kit" to run player command "purchasekit hulk" with left click
-				format gui slot 18 of player with 1 gray dye named "&c&nHulk Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7Ground Slam||||&c★ &fCost: &e22 ❂||||&7Left click to purchase this kit" to run player command "previewkit Hulk" with right click
 			if player has permission "kit.enchanter":
-				wait 1 tick
 				format gui slot 19 of player with 1 enchantment table named "&a&nEnchanter Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Enchant Storm||||&eClick to Select" to run player command "/kit Enchanter" with left click
-				format gui slot 19 of player with 1 enchantment table named "&a&nEnchanter Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Enchant Storm||||&eClick to Select" to run player command "/previewkit Enchanter" with right click
 			else:
-				wait 1 tick
 				format gui slot 19 of player with 1 gray dye named "&c&nEnchanter Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Enchant Storm||||&c★ &fCost: &e21 ❂||||&7Left click to purchase this kit" to run player command "purchasekit enchanter" with left click
-				format gui slot 19 of player with 1 gray dye named "&c&nEnchanter Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Enchant Storm||||&c★ &fCost: &e21 ❂||||&7Left click to purchase this kit" to run player command "previewkit Enchanter" with right click
 			if player has permission "kit.viper":
-				wait 1 tick
 				format gui slot 20 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/kit Viper" with left click
-				format gui slot 20 of player with 1 spider eye named "&a&nViper Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Venom Strike||||&eClick to Select" to run player command "/previewkit Viper" with right click
 			else:
-				wait 1 tick
 				format gui slot 20 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "purchasekit viper" with left click
-				format gui slot 20 of player with 1 gray dye named "&c&nViper Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Venom Strike||||&c★ &fCost: &e33 ❂||||&7Left click to purchase this kit" to run player command "previewkit viper" with right click
 			if player has permission "kit.bomber":
-				wait 1 tick
 				format gui slot 21 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Heavy||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/kit Bomber" with left click
-				format gui slot 21 of player with 1 383:50 named "&a&nBomber Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7TNT Throw||||&eClick to Select" to run player command "/previewkit Bomber" with right click
 			else:
-				wait 1 tick
 				format gui slot 21 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "purchasekit bomber" with left click
-				format gui slot 21 of player with 1 gray dye named "&c&nBomber Kit" with lore "||&c★ &fType: &7Heavy||&c★ &fAbility: &7TNT Throw||||&c★ &fCost: &e31 ❂||||&7Left click to purchase this kit" to run player command "previewkit bomber" with right click
 			if player has permission "kit.necromancer":
-				wait 1 tick
 				format gui slot 22 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/kit Necromancer" with left click
-				format gui slot 22 of player with 1 rotten flesh named "&a&nNecromancer Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Summoner's Flute||||&eClick to Select" to run player command "/previewkit Necromancer" with right click
 			else:
-				wait 1 tick
 				format gui slot 22 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "purchasekit necromancer" with left click
-				format gui slot 22 of player with 1 gray dye named "&c&nNecromancer Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Summoner's Flute||||&c★ &fCost: &e38 ❂||||&7Left click to purchase this kit" to run player command "previewkit necromancer" with right click
 			if player has permission "kit.wizard":
 				wait 1 tick
 				format gui slot 23 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/kit Wizard" with left click
-				format gui slot 23 of player with 1 stick named "&a&nWizard Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Disarm||||&eClick to Select" to run player command "/previewkit Wizard" with right click
 			else:
-				wait 1 tick
 				format gui slot 23 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "purchasekit wizard" with left click
-				format gui slot 23 of player with 1 gray dye named "&c&nWizard Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Disarm||||&c★ &fCost: &e39 ❂||||&7Left click to purchase this kit" to run player command "previewkit Wizard" with right click
 			if player has permission "kit.fisherman":
-				wait 1 tick
 				format gui slot 24 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/kit Fisherman" with left click
-				format gui slot 24 of player with 1 fishing rod named "&a&nFisherman Kit" with lore "||&7★ &fType: &7Aquatic||&7★ &fAbility: &7Lure||||&eClick to Select" to run player command "/previewkit Fisherman" with right click
 			else:
-				wait 1 tick
 				format gui slot 24 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "purchasekit fisherman" with left click
-				format gui slot 24 of player with 1 gray dye named "&c&nFisherman Kit" with lore "||&c★ &fType: &7Aquatic||&c★ &fAbility: &7Lure||||&c★ &fCost: &e30 ❂||||&7Left click to purchase this kit" to run player command "previewkit fisherman" with right click
 			if player has permission "kit.alchemist":
-				wait 1 tick
 				format gui slot 25 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/kit Alchemist" with left click
-				format gui slot 25 of player with 1 379 named "&a&nAlchemist Kit" with lore "||&7★ &fType: &7Mystic||&7★ &fAbility: &7Alchemy||||&eClick to Select" to run player command "/previewkit Alchemist" with right click
 			else:
-				wait 1 tick
 				format gui slot 25 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "purchasekit alchemist" with left click
-				format gui slot 25 of player with 1 gray dye named "&c&nAlchemist Kit" with lore "||&c★ &fType: &7Mystic||&c★ &fAbility: &7Alchemy||||&c★ &fCost: &e37 ❂||||&7Left click to purchase this kit" to run player command "previewkit alchemist" with right click
 			if player has permission "kit.vampire":
-				wait 1 tick
 				format gui slot 26 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/kit Vampire" with left click
-				format gui slot 26 of player with 1 redstone named "&a&nVampire Kit" with lore "||&7★ &fType: &7Shadow||&7★ &fAbility: &7Life Steal||||&eClick to Select" to run player command "/previewkit Vampire" with right click
 			else:
-				wait 1 tick
-				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "purchasekit vampire" with left click
-				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "previewkit vampire" with right click
+ 				format gui slot 26 of player with 1 gray dye named "&c&nVampire Kit" with lore "||&c★ &fType: &7Shadow||&c★ &fAbility: &7Steal Health||||&c★ &fCost: &e42 ❂||||&7Left click to purchase this kit" to run player command "purchasekit vampire" with left click
 		if arg-1 is "Basic":
 			player has permission "kit.Basic":
 				set {Class::%UUID of player%} to "Basic"
