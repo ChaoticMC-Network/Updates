@@ -54,3 +54,4 @@
 - [X] Removed CopyCat Kit
 - [X] Removed Previewing of Kits
 - [X] You cannot move your sword, bow, or fishing rod
+- [X] Removed /settings menu to be added for a later date [To Be Announced]
