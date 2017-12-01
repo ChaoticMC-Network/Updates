@@ -53,3 +53,4 @@
 - [X] Your Ability Cooldown now displays on the scoreboard
 - [X] Removed CopyCat Kit
 - [X] Removed Previewing of Kits
+- [X] You cannot move your sword, bow, or fishing rod
