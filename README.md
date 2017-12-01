@@ -43,3 +43,8 @@
 - [ ] Shotgun Kit
 - [ ] Tank Kit
 - [ ] King Kit
+
+# Changelog
+- [ ] Removed XP
+- [ ] Added HPTHING.sk to KitPvP3.sk
+- [ ] Fixed Leaderboard
