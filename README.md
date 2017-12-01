@@ -51,3 +51,5 @@
 - [X] Removed Name, Kit, and XP from Scoreboard
 - [X] Changed chaoticnet.pro -> ChaoticMC.Net on Sidebar
 - [X] Your Ability Cooldown now displays on the scoreboard
+- [X] Removed CopyCat Kit
+- [X] Removed Previewing of Kits
