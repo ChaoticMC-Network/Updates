@@ -55,3 +55,5 @@
 - [X] Removed Previewing of Kits
 - [X] You cannot move your sword, bow, or fishing rod
 - [X] Removed /settings menu to be added for a later date [To Be Announced]
+- [X] Removed Player Heads due to unfairness
+- [X] For ALL KITS, you gain 3 hearts back when you kill someone to compensate for removal of player heads
