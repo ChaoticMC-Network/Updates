@@ -104,6 +104,18 @@ on inventory click:
 		name of clicked item is "&6Alchemy &f(Right Click)":
 			cancel event
 			send "&7You can't move this item"
+	if clicked item is diamond sword:
+		name of clicked item is "&bDiamond Sword":
+			cancel event
+			send "&7You can't move this item"
+	if clicked item is a fishing rod:
+		name of clicked item is "&eFishing Rod":
+			cancel event
+			send "&7You can't move this item"
+	if clicked item is a bow:
+		name of clicked item is "&eBow":
+			cancel event
+			send "&7You can't move this item"
 	
 on projectile hit:
 	set {_Block} to the block at location 0.1 in front of projectile
