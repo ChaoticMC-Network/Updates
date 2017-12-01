@@ -1,3 +1,6 @@
+on damage:
+	set score "&c❤" below victim to health of victim for attacker
+
 on respawn:
   event.setRespawnLocation({_location});
 
