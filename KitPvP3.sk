@@ -1028,560 +1028,256 @@ command /kit [<text>]:
 				send "&7You don't have the &9&nArcher Kit&r &7unlocked"
 		if arg-1 is "Scout":
 			player has permission "kit.scout":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Scout"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 406 named "&bAdrenaline &f(Right Click)" with lore "||&fAbility: &aAdrenaline||||&eSpeed II for 10s||eDuration: &a10s||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eScout Helmet"
-					equip player with iron chestplate named "&eScout Chestplate"
-					equip player with iron leggings named "&eScout Leggings"
-					equip player with iron boots named "&eScout Boots"
-					set {ScoutGear::*} to player's helmet, chestplate, leggings, and boots
-					set {ScoutItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &aScout Kit"
-				else:
-					set {Class::%UUID of player%} to "Scout"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 406 named "&bAdrenaline &f(Right Click)" with lore "||&fAbility: &aAdrenaline||||&eSpeed II for 10s||eDuration: &a10s||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eScout Helmet"
-					equip player with iron chestplate named "&eScout Chestplate"
-					equip player with iron leggings named "&eScout Leggings"
-					equip player with iron boots named "&eScout Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &aScout Kit"
+				set {Class::%UUID of player%} to "Scout"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 406 named "&bAdrenaline &f(Right Click)" with lore "||&fAbility: &aAdrenaline||||&eSpeed II for 10s||eDuration: &a10s||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eScout Helmet"
+				equip player with iron chestplate named "&eScout Chestplate"
+				equip player with iron leggings named "&eScout Leggings"
+				equip player with iron boots named "&eScout Boots"
+				send "&7You selected the &aScout Kit"
 			else:
 				send "&7You don't have the &a&nScout Kit&r &7unlocked"
 		if arg-1 is "Medic":
 			player has permission "kit.medic":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Medic"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 351:1 named "&eHealing Current &f(Right Click)" with lore "||&fAbility: &aHealing Current||||&eSummon a healing circle||||&fDuration: &e8s||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eMedic Helmet"
-					equip player with gold chestplate of protection 4 with no nbt named "&eMedic Chestplate"
-					equip player with iron leggings named "&eMedic Leggings"
-					equip player with iron boots named "&eMedic Boots"
-					set {MedicGear::*} to player's helmet, chestplate, leggings, and boots
-					set {MedicItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &eMedic Kit"
-				else:
-					set {Class::%UUID of player%} to "Medic"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 351:1 named "&eHealing Current &f(Right Click)" with lore "||&fAbility: &aHealing Current||||&eSummon a healing circle||||&fDuration: &e8s||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eMedic Helmet"
-					equip player with gold chestplate of protection 4 with no nbt named "&eMedic Chestplate"
-					equip player with iron leggings named "&eMedic Leggings"
-					equip player with iron boots named "&eMedic Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &eMedic Kit"
+				set {Class::%UUID of player%} to "Medic"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 351:1 named "&eHealing Current &f(Right Click)" with lore "||&fAbility: &aHealing Current||||&eSummon a healing circle||||&fDuration: &e8s||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eMedic Helmet"
+				equip player with gold chestplate of protection 4 with no nbt named "&eMedic Chestplate"
+				equip player with iron leggings named "&eMedic Leggings"
+				equip player with iron boots named "&eMedic Boots"
+				play "SUCCESSFUL_HIT" to player at volume 1
+				send "&7You have selected the &eMedic Kit"
 			else:
 				send "&7You don't have the &e&nMedic Kit&r &7unlocked"
 		if arg-1 is "TNT":
 			player has permission "kit.TNT":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "TNT"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 redstone named "&cDetonate &f(Right Click)" with lore "||&fAbility: &aDetonate||||&eCreate an explosion||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with TNT named "&eTNT Helmet"
-					equip player with iron chestplate named "&eTNT Chestplate"
-					equip player with diamond leggings of protection 1 with no nbt named "&eTNT Leggings"
-					equip player with iron boots named "&eTNT Boots"
-					set {TNTGear::*} to player's helmet, chestplate, leggings, and boots
-					set {TNTItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &cTNT Kit"
-				else:
-					set {Class::%UUID of player%} to "TNT"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 redstone named "&cDetonate &f(Right Click)" with lore "||&fAbility: &aDetonate||||&eCreate an explosion||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with TNT named "&eTNT Helmet"
-					equip player with iron chestplate named "&eTNT Chestplate"
-					equip player with diamond leggings of protection 1 with no nbt named "&eTNT Leggings"
-					equip player with iron boots named "&eTNT Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &cTNT Kit"
+				set {Class::%UUID of player%} to "TNT"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 redstone named "&cDetonate &f(Right Click)" with lore "||&fAbility: &aDetonate||||&eCreate an explosion||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with TNT named "&eTNT Helmet"
+				equip player with iron chestplate named "&eTNT Chestplate"
+				equip player with diamond leggings of protection 1 with no nbt named "&eTNT Leggings"
+				equip player with iron boots named "&eTNT Boots"
+				play "SUCCESSFUL_HIT" to player at volume 1
+				send "&7You selected the &cTNT Kit"
 			else:
 				send "&7You don't have the &c&nTNT Kit&r &7unlocked"
 		if arg-1 is "Ghost":
 			player has permission "kit.ghost":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Ghost"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 ghast tear named "&7Phantom Drive &f(Right Click)" with lore "||&fAbility: &aPhantom Drive||||&eBlind nearby players + invis 10s||&fDuration: &a5s||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eGhost Helmet"
-					equip player with iron chestplate named "&eGhost Chestplate"
-					equip player with iron leggings named "&eGhost Leggings"
-					equip player with iron boots named "&eGhost Boots"
-					set {GhostGear::*} to player's helmet, chestplate, leggings, and boots
-					set {GhostItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &fGhost Kit"
-				else:
-					set {Class::%UUID of player%} to "Ghost"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 ghast tear named "&7Phantom Drive &f(Right Click)" with lore "||&fAbility: &aPhantom Drive||||&eBlind nearby players + invis 10s||&fDuration: &a5s||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eGhost Helmet"
-					equip player with iron chestplate named "&eGhost Chestplate"
-					equip player with iron leggings named "&eGhost Leggings"
-					equip player with iron boots named "&eGhost Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &fGhost Kit"
+				set {Class::%UUID of player%} to "Ghost"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 ghast tear named "&7Phantom Drive &f(Right Click)" with lore "||&fAbility: &aPhantom Drive||||&eBlind nearby players + invis 10s||&fDuration: &a5s||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eGhost Helmet"
+				equip player with iron chestplate named "&eGhost Chestplate"
+				equip player with iron leggings named "&eGhost Leggings"
+				equip player with iron boots named "&eGhost Boots"
+				send "&7You selected the &fGhost Kit"
 			else:
 				send "&7You don't have the &f&nGhost Kit&r &7unlocked"
 		if arg-1 is "Kangaroo":
 			player has permission "kit.kangaroo":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Kangaroo"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 feather named "&bLeap &f(Right Click)" with lore "||&fAbility: &aLeap||||&eJump high into the air||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eKangaroo Helmet"
-					equip player with iron chestplate named "&eKangaroo Chestplate"
-					equip player with iron leggings named "&eKangaroo Leggings"
-					equip player with iron boots named "&eKangaroo Boots"
-					set {KangarooGear::*} to player's helmet, chestplate, leggings, and boots
-					set {KangarooItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &bKangaroo Kit"
-				else:
-					set {Class::%UUID of player%} to "Kangaroo"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 feather named "&bLeap &f(Right Click)" with lore "||&fAbility: &aLeap||||&eJump high into the air||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eKangaroo Helmet"
-					equip player with iron chestplate named "&eKangaroo Chestplate"
-					equip player with iron leggings named "&eKangaroo Leggings"
-					equip player with iron boots named "&eKangaroo Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &bKangaroo Kit"
+				set {Class::%UUID of player%} to "Kangaroo"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 feather named "&bLeap &f(Right Click)" with lore "||&fAbility: &aLeap||||&eJump high into the air||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eKangaroo Helmet"
+				equip player with iron chestplate named "&eKangaroo Chestplate"
+				equip player with iron leggings named "&eKangaroo Leggings"
+				equip player with iron boots named "&eKangaroo Boots"
+				send "&7You selected the &bKangaroo Kit"
 			else:
 				send "&7You don't have the &b&nKangaroo Kit&r &7unlocked"
 		if arg-1 is "Enderman":
 			player has permission "kit.enderman":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Enderman"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 eye of ender named "&dTeleport &f(Right Click)" with lore "||&fAbility: &aTeleport||||&eTeleport behind a nearby player||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eEnderman Helmet"
-					equip player with iron chestplate named "&eEnderman Chestplate"
-					equip player with iron leggings named "&eEnderman Leggings"
-					equip player with iron boots named "&eEnderman Boots"
-					set {EndermanGear::*} to player's helmet, chestplate, leggings, and boots
-					set {EndermanItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &5Enderman Kit"
-				else:
-					set {Class::%UUID of player%} to "Enderman"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 eye of ender named "&dTeleport &f(Right Click)" with lore "||&fAbility: &aTeleport||||&eTeleport behind a nearby player||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eEnderman Helmet"
-					equip player with iron chestplate named "&eEnderman Chestplate"
-					equip player with iron leggings named "&eEnderman Leggings"
-					equip player with iron boots named "&eEnderman Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &5Enderman Kit"	
+				set {Class::%UUID of player%} to "Enderman"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 eye of ender named "&dTeleport &f(Right Click)" with lore "||&fAbility: &aTeleport||||&eTeleport behind a nearby player||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eEnderman Helmet"
+				equip player with iron chestplate named "&eEnderman Chestplate"
+				equip player with iron leggings named "&eEnderman Leggings"
+				equip player with iron boots named "&eEnderman Boots"
+				send "&7You selected the &5Enderman Kit"	
 			else:
 				send "&7You don't have the &5&nEnderman Kit&r &7unlocked"
 		if arg-1 is "Hulk":
 			player has permission "kit.hulk":
-				if {Tracker::%UUID of player%} is not set:
-					set {Class::%UUID of player%} to "Hulk"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 33 named "&2Ground Slam &f(Right Click)" with lore "||&fAbility: &aGround Slam||||&eLaunch nearby players||&ePlayers take 4 damage when they fall||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom soup named "&eMushroom Soup"
-					equip player with iron helmet named "&eHulk Helmet"
-					equip player with iron chestplate named "&eHulk Chestplate"
-					equip player with iron leggings named "&eHulk Leggings"
-					equip player with diamond boots named "&eHulk Boots"
-					set {HulkGear::*} to player's helmet, chestplate, leggings, and boots
-					set {HulkItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &2Hulk Kit"
-				else:
-					set {Class::%UUID of player%} to "Hulk"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 33 named "&2Ground Slam &f(Right Click)" with lore "||&fAbility: &aGround Slam||||&eLaunch nearby players||&ePlayers take 4 damage when they fall||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom soup named "&eMushroom Soup"
-					equip player with iron helmet named "&eHulk Helmet"
-					equip player with iron chestplate named "&eHulk Chestplate"
-					equip player with iron leggings named "&eHulk Leggings"
-					equip player with diamond boots named "&eHulk Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &2Hulk Kit"
+				set {Class::%UUID of player%} to "Hulk"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 33 named "&2Ground Slam &f(Right Click)" with lore "||&fAbility: &aGround Slam||||&eLaunch nearby players||&ePlayers take 4 damage when they fall||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom soup named "&eMushroom Soup"
+				equip player with iron helmet named "&eHulk Helmet"
+				equip player with iron chestplate named "&eHulk Chestplate"
+				equip player with iron leggings named "&eHulk Leggings"
+				equip player with diamond boots named "&eHulk Boots"
+				send "&7You selected the &2Hulk Kit"
 			else:
 				send "&7You don't have the &2&nHulk Kit&r &7unlocked"
 		if arg-1 is "Enchanter":
 			player has permission "kit.enchanter":
-				if {Tracker::%UUID of player%} is not set:
-					set {Class::%UUID of player%} to "Enchanter"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 enchantment table named "&3Enchant Storm &f(Right Click)" with lore "||&fAbility: &aEnchant Storm||||&eGet a random enchant for 5s||||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eEnchanter Helmet"
-					equip player with iron chestplate named "&eEnchanter Chestplate"
-					equip player with iron leggings named "&eEnchanter Leggings"
-					equip player with iron boots named "&eEnchanter Boots"
-					set {EnchanterGear::*} to player's helmet, chestplate, leggings, and boots
-					set {EnchanterItems::*} to items in player's inventory
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &3Enchanter Kit"
-				else:
-					set {Class::%UUID of player%} to "Enchanter"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 enchantment table named "&3Enchant Storm &f(Right Click)" with lore "||&fAbility: &aEnchant Storm||||&eGet a random enchant for 5s||||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eEnchanter Helmet"
-					equip player with iron chestplate named "&eEnchanter Chestplate"
-					equip player with iron leggings named "&eEnchanter Leggings"
-					equip player with iron boots named "&eEnchanter Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &3Enchanter Kit"
+				set {Class::%UUID of player%} to "Enchanter"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 enchantment table named "&3Enchant Storm &f(Right Click)" with lore "||&fAbility: &aEnchant Storm||||&eGet a random enchant for 5s||||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eEnchanter Helmet"
+				equip player with iron chestplate named "&eEnchanter Chestplate"
+				equip player with iron leggings named "&eEnchanter Leggings"
+				equip player with iron boots named "&eEnchanter Boots"
+				send "&7You selected the &3Enchanter Kit"
 			else:
 				send "&7You don't have the &3&nEnchanter Kit&r &7unlocked"
-		if arg-1 is "Copycat":
-			player has permission "kit.copycat":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Copycat"
-					close player's inventory
-					clear player's inventory
-					make player execute command "/kit %{CopyCat::%UUID of player%}%"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &f%{CopyCat::%UUID of player%}% Kit"
-				else:
-					set {Class::%UUID of player%} to "CopyCat"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					make player run command "/kit %{CopyCat::%UUID of player%}%" as op
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &f%{CopyCat::%UUID of player%}% Kit"
 		if arg-1 is "Viper":
 			player has permission "kit.viper":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Viper"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 spider eye named "&2Venom Strike &f(Right Click)" with lore "||&fAbility: &aVenom Strike||||&ePoison + Slow nearby players||||&fDuration: &e4s||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eViper Helmet"
-					equip player with iron chestplate named "&eViper Chestplate"
-					equip player with iron leggings named "&eViper Leggings"
-					equip player with iron boots named "&eViper Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &2Viper Kit"
-				else:
-					set {Class::%UUID of player%} to "Viper"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 spider eye named "&2Venom Strike &f(Right Click)" with lore "||&fAbility: &aVenom Strike||||&ePoison + Slow nearby players||||&fDuration: &e4s||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eViper Helmet"
-					equip player with iron chestplate named "&eViper Chestplate"
-					equip player with iron leggings named "&eViper Leggings"
-					equip player with iron boots named "&eViper Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &2Viper Kit"
+				set {Class::%UUID of player%} to "Viper"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 spider eye named "&2Venom Strike &f(Right Click)" with lore "||&fAbility: &aVenom Strike||||&ePoison + Slow nearby players||||&fDuration: &e4s||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eViper Helmet"
+				equip player with iron chestplate named "&eViper Chestplate"
+				equip player with iron leggings named "&eViper Leggings"
+				equip player with iron boots named "&eViper Boots"
+				send "&7You selected the &2Viper Kit"
 		if arg-1 is "Bomber":
 			player has permission "kit.bomber":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Bomber"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 3 tnt named "&eThrowing TNT &7(Right Click)"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBomber Helmet"
-					equip player with iron chestplate named "&eBomber Chestplate"
-					equip player with iron leggings named "&eBomber Leggings"
-					equip player with iron boots named "&eBomber Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &cBomber Kit"
-				else:
-					set {Class::%UUID of player%} to "Bomber"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 4 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 5 of player's inventory to 3 tnt named "&eThrowing TNT &7(Right Click)"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBomber Helmet"
-					equip player with iron chestplate named "&eBomber Chestplate"
-					equip player with iron leggings named "&eBomber Leggings"
-					equip player with iron boots named "&eBomber Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &cBomber Kit"
+				set {Class::%UUID of player%} to "Bomber"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 4 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 5 of player's inventory to 3 tnt named "&eThrowing TNT &7(Right Click)"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eBomber Helmet"
+				equip player with iron chestplate named "&eBomber Chestplate"
+				equip player with iron leggings named "&eBomber Leggings"
+				equip player with iron boots named "&eBomber Boots"				
+				send "&7You have selected the &cBomber Kit"
 		if arg-1 is "Necromancer":
 			player has permission "kit.necromancer":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Necromancer"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 bone named "&7Summoner's Flute &f(Right Click)" with lore "||&fAbility: &aSummoner's Flute||||&eSummon an undead army||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eNecromancer Helmet"
-					equip player with iron chestplate named "&eNecromancer Chestplate"
-					equip player with iron leggings named "&eNecromancer Leggings"
-					equip player with iron boots named "&eNecromancer Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &8Necromancer Kit"
-				else:
-					set {Class::%UUID of player%} to "Necromancer"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 bone named "&7Summoner's Flute &f(Right Click)" with lore "||&fAbility: &aSummoner's Flute||||&eSummon an undead army||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eNecromancer Helmet"
-					equip player with iron chestplate named "&eNecromancer Chestplate"
-					equip player with iron leggings named "&eNecromancer Leggings"
-					equip player with iron boots named "&eNecromancer Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &8Necromancer Kit"
+				set {Class::%UUID of player%} to "Necromancer"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 bone named "&7Summoner's Flute &f(Right Click)" with lore "||&fAbility: &aSummoner's Flute||||&eSummon an undead army||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eNecromancer Helmet"
+				equip player with iron chestplate named "&eNecromancer Chestplate"
+				equip player with iron leggings named "&eNecromancer Leggings"
+				equip player with iron boots named "&eNecromancer Boots"
+				send "&7You selected the &8Necromancer Kit"
 		if arg-1 is "Fisherman":
 			player has permission "kit.fisherman":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Fisherman"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 349 named "&9Lure &f(Right Click)" with lore "||&fAbility: &aLure||||&ePull nearby players towards you||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eSorting Helmet"
-					equip player with iron chestplate named "&eWizard Chestplate"
-					equip player with iron leggings named "&eWizard Leggings"
-					equip player with iron boots named "&eWizard Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &9Fisherman Kit"
-				else:
-					set {Class::%UUID of player%} to "Fisherman"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 349 named "&9Lure &f(Right Click)" with lore "||&fAbility: &aLure||||&ePull nearby players towards you||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eFisherman Helmet"
-					equip player with iron chestplate named "&eFisherman Chestplate"
-					equip player with iron leggings named "&eFisherman Leggings"
-					equip player with iron boots named "&eFisherman Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &9Fisherman Kit"
+				set {Class::%UUID of player%} to "Fisherman"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 349 named "&9Lure &f(Right Click)" with lore "||&fAbility: &aLure||||&ePull nearby players towards you||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eFisherman Helmet"
+				equip player with iron chestplate named "&eFisherman Chestplate"
+				equip player with iron leggings named "&eFisherman Leggings"
+				equip player with iron boots named "&eFisherman Boots"
+				send "&7You selected the &9Fisherman Kit"
 		if arg-1 is "Wizard":
 			player has permission "kit.wizard":
-				if {Tracker::%UUID of player%} is set:
-					set {Class::%UUID of player%} to "Wizard"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 stick named "&bDisarm &f(Right Click)" with lore "||&fAbility: &aDisarm||||&eDisarm a nearby player||&fCooldown: &a20s"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eSorting Helmet"
-					equip player with iron chestplate named "&eWizard Chestplate"
-					equip player with iron leggings named "&eWizard Leggings"
-					equip player with iron boots named "&eWizard Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &bWizard Kit"
-				else:
-					set {Class::%UUID of player%} to "Wizard"
-					close player's inventory
-					clear player's inventory
-					set player's gamemode to survival
-					set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 1 stick named "&bDisarm &f(Right Click)" with lore "||&fAbility: &aDisarm||||&eDisarm a nearby player||&fCooldown: &a20s"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eSorting Helmet"
-					equip player with iron chestplate named "&eWizard Chestplate"
-					equip player with iron leggings named "&eWizard Leggings"
-					equip player with iron boots named "&eWizard Boots"
-					play "SUCCESSFUL_HIT" to player at volume 1
-					send "&7You have selected the &bWizard Kit"
+				set {Class::%UUID of player%} to "Wizard"
+				close player's inventory
+				clear player's inventory
+				set player's gamemode to survival
+				set slot 0 of player's inventory to 1 diamond sword named "&bDiamond Sword"
+				set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
+				set slot 2 of player's inventory to 1 bow named "&eBow"
+				set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
+				set slot 4 of player's inventory to 1 stick named "&bDisarm &f(Right Click)" with lore "||&fAbility: &aDisarm||||&eDisarm a nearby player||&fCooldown: &a20s"
+				set slot 9 of player's inventory to 3 arrows named "&eArrow"
+				give player 35 mushroom stew named "&eMushroom Soup"
+				equip player with iron helmet named "&eSorting Helmet"
+				equip player with iron chestplate named "&eWizard Chestplate"
+				equip player with iron leggings named "&eWizard Leggings"
+				equip player with iron boots named "&eWizard Boots"
+				send "&7You selected the &bWizard Kit"
 		if arg-1 is "Alchemist":
 			player has permission "kit.alchemist":
 				set {Class::%UUID of player%} to "Alchemist"
@@ -1600,7 +1296,7 @@ command /kit [<text>]:
 				equip player with iron chestplate named "&eAlchemist Chestplate"
 				equip player with iron leggings named "&eAlchemist Leggings"
 				equip player with iron boots named "&eAlchemist Boots"
-				send "&7You have selected the &6Alchemist Kit"
+				send "&7You selected the &6Alchemist Kit"
 		if arg-1 is "Vampire" or "vamp":
 			player has permission "kit.vampire":
 				set {Class::%UUID of player%} to "Vampire"
@@ -1618,7 +1314,7 @@ command /kit [<text>]:
 				equip player with iron chestplate named "&eVampire Chestplate"
 				equip player with iron leggings named "&eVampire Leggings"
 				equip player with iron boots named "&eVampire Boots"
-				send "&7You have selected the &dVampire Kit"
+				send "&7You selected the &dVampire Kit"
 			
 on rightclick with blaze powder:
 	name of player's tool is "&6Blazing Inferno &f(Right Click)":
@@ -1793,7 +1489,7 @@ on rightclick with fire charge:
 					wait a second
 				play "SUCCESSFUL_HIT" to player at volume 1
 				send "&aAbility: &eYour ability is ready"
-				
+
 on damage:
 	if {DoubleDamage::%UUID of attacker%} is set:
 		set damage to damage * 0.5
@@ -2096,6 +1792,10 @@ on rightclick with enchantment table:
 				play "SUCCESSFUL_HIT" to player at volume 1
 				send "&aAbility: &eYour ability is ready" to player
 
+on place of enchantment table:
+	cancel event
+	send "&7You cannot place this item down"
+
 every second in "Spawn":
 	loop all players:
 		if {Class::%UUID of loop-player%} is set:
@@ -2138,11 +1838,6 @@ on right click holding a mushroom soup:
 				
 on pickup of arrow:
 	cancel event
-
-on rightclick with mushroom soup:
-	if {PreviewMode::%UUID of player%} is set:
-		send "&7You cannot use soups while in &aPreview Mode"
-		cancel event
 
 command /unlockkit [<text>]:
 	trigger:
@@ -2288,47 +1983,10 @@ on region leave:
 		else:
 			if {Toggled::%UUID of player%} is not set:
 				if {Class::%UUID of player%} is not set:
-					if {DefaultKit::%UUID of player%} is not set:
-						make player execute command "/kit Basic"
-					else:
-						if {DefaultKit::%UUID of player%} is "Basic":
-							make player execute command "/kit Basic"
-						if {DefaultKit::%UUID of player%} is "Archer":
-							make player execute command "/kit Archer"
-						if {DefaultKit::%UUID of player%} is "TNT":
-							make player execute command "/kit TNT"
-						if {DefaultKit::%UUID of player%} is "Medic":
-							make player execute command "/kit Medic"
-						if {DefaultKit::%UUID of player%} is "Ghost":
-							make player execute command "/kit Ghost"
-						if {DefaultKit::%UUID of player%} is "Hulk":
-							make player execute command "/kit Hulk"
-						if {DefaultKit::%UUID of player%} is "Enderman":
-							make player execute command "/kit Enderman"
-						if {DefaultKit::%UUID of player%} is "Scout":
-							make player execute command "/kit Scout"
-						if {DefaultKit::%UUID of player%} is "Blaziken":
-							make player execute command "/kit Blaziken"
-						if {DefaultKit::%UUID of player%} is "Kangaroo":
-							make player execute command "/kit Kangaroo"
-						if {DefaultKit::%UUID of player%} is "Enchanter":
-							make player execute command "/kit Enchanter"
-						if {DefaultKit::%UUID of player%} is "Viper":
-							make player execute command "/kit Viper"
-						if {DefaultKit::%UUID of player%} is "Bomber":
-							make player execute command "/kit Bomber"
-						if {DefaultKit::%UUID of player%} is "Necromancer":
-							make player execute command "/kit Necromancer"
-						if {DefaultKit::%UUID of player%} is "Wizard":
-							make player execute command "/kit Wizard"
-						if {DefaultKit::%UUID of player%} is "Fisherman":
-							make player execute command "/kit Fisherman"
-						if {DefaultKit::%UUID of player%} is "Alchemist":
-							make player execute command "/kit Alchemist"
-						if {DefaultKit::%UUID of player%} is "Vampire":
-							make player execute command "/kit Vampire"						
+					make player execute command "/kit Basic"					
 		
 command /autokit:
+	permission: kitpvp.autokit
 	trigger:
 		if {Toggled::%UUID of player%} is not set:
 			set {Toggled::%UUID of player%} to "True"
@@ -2336,852 +1994,7 @@ command /autokit:
 		else:
 			delete {Toggled::%UUID of player%}
 			send "&7You have &a&nenabled&r &7auto-kit"
-		
-command /defaultkit [<text>]:
-	trigger:
-		if arg-1 is not set:
-			send "&7You must specify a Kit"
-		else:
-			if arg-1 is "Basic":
-				send "&7You have set your default kit to &fBasic"
-				set {DefaultKit::%UUID of player%} to "Basic"
-			if arg-1 is "Archer":
-				send "&7You have set your default kit to &9Archer"
-				set {DefaultKit::%UUID of player%} to "Archer"
-			if arg-1 is "Blaziken":
-				send "&7You have set your default kit to &6Blaziken"
-				set {DefaultKit::%UUID of player%} to "Blaziken"
-			if arg-1 is "Kangaroo":
-				send "&7You have set your default kit to &bKangaroo"
-				set {DefaultKit::%UUID of player%} to "Kangaroo"
-			if arg-1 is "Hulk":
-				send "&7You have set your default kit to &2Hulk"
-				set {DefaultKit::%UUID of player%} to "Hulk"
-			if arg-1 is "Ghost":
-				send "&7You have set your default kit to &fGhost"
-				set {DefaultKit::%UUID of player%} to "Ghost"
-			if arg-1 is "Medic":
-				send "&7You have set your default kit to &eMedic"
-				set {DefaultKit::%UUID of player%} to "Medic"
-			if arg-1 is "Enderman":
-				send "&7You have set your default kit to &5Enderman"
-				set {DefaultKit::%UUID of player%} to "Enderman"
-			if arg-1 is "TNT":
-				send "&7You have set your default kit to &cTNT"
-				set {DefaultKit::%UUID of player%} to "TNT"
-			if arg-1 is "Scout":
-				send "&7You have set your default kit to &aScout"
-				set {DefaultKit::%UUID of player%} to "Scout"
-			if arg-1 is "Enchanter":
-				send "&7You have set your default kit to &3Enchanter"
-				set {DefaultKit::%UUID of player%} to "Enchanter"
-			if arg-1 is "Viper":
-				send "&7You have set your default kit to &2Viper"
-				set {DefaultKit::%UUID of player%} to "Viper"
-			if arg-1 is "Bomber":
-				send "&7You have set your default kit to &cBomber"
-				set {DefaultKit::%UUID of player%} to "Bomber"
-			if arg-1 is "Fisherman":
-				send "&7You have set your default kit to &9Fisherman"
-				set {DefaultKit::%UUID of player%} to "Fisherman"
-			if arg-1 is "Necromancer":
-				send "&7You have set your default kit to &8Necromancer"
-				set {DefaultKit::%UUID of player%} to "Necromancer"
-			if arg-1 is "Wizard":
-				send "&7You have set your default kit to &bWizard"
-				set {DefaultKit::%UUID of player%} to "Wizard"
-			if arg-1 is "Alchemist":
-				send "&7You have set your default kit to &6Alchemist"
-				set {DefaultKit::%UUID of player%} to "Alchemist"
-			if arg-1 is "Vampire":
-				send "&7You have set your default kit to &dVampire"
-				set {DefaultKit::%UUID of player%} to "Vampire"
-				
-on right click with bow: 
-	if {PreviewMode::%UUID of shooter%} is set:
-		send "&7You cannot shoot a bow while in &aPreview Mode"
-		cancel event
 
-command /nopreivew:
-	trigger:
-		send "&cThis kit can't be previewed"
-		
-command /previewkit [<text>]:
-	aliases: /preview
-	trigger:
-		if arg-1 is not set:
-			wait 1 tick
-			open chest with 2 rows named "Choose a Kit" to player
-			wait 1 tick
-			send "&7Select a kit to preview"
-			format gui slot 0 of player with 1 diamond sword named "&aBasic Kit" with lore "||&eClick to preview" to run player command "/previewkit Basic" with left click
-			format gui slot 1 of player with 1 bow named "&aArcher Kit" with lore "||&eClick to preview" to run player command "/previewkit Archer" with left click
-			format gui slot 2 of player with 1 blaze powder named "&aBlaziken Kit" with lore "||&eClick to preview" to run player command "/previewkit Blaziken" with left click
-			format gui slot 3 of player with 1 potion:16386 with no nbt named "&aScout Kit" with lore "||&eClick to preview" to run player command "/previewkit Scout" with left click
-			format gui slot 4 of player with 1 red dye named "&aMedic Kit" with lore "||&eClick to preview" to run player command "/previewkit Medic" with left click
-			format gui slot 5 of player with 1 TNT named "&aTNT Kit" with lore "||&eClick to preview" to run player command "/previewkit TNT" with left click
-			format gui slot 6 of player with 1 ghast tear named "&aGhost Kit" with lore "||&eClick to preview" to run player command "/previewkit Ghost" with left click
-			format gui slot 7 of player with 1 feather named "&aKangaroo Kit" with lore "||&eClick to preview" to run player command "/previewkit Kangaroo" with left click
-			format gui slot 8 of player with 1 ender pearl named "&aEnderman Kit" with lore "||&eClick to preview" to run player command "/previewkit Enderman" with left click
-			format gui slot 9 of player with 1 stone axe named "&aHulk Kit" with lore "||&eClick to preview" to run player command "/previewkit Hulk" with left click
-			format gui slot 10 of player with 1 enchantment table named "&aEnchanter Kit" with lore "||&eClick to preview" to run player command "/previewkit Enchanter" with left click
-			format gui slot 11 of player with 1 egg named "&aCopycat Kit" with lore "||&cThis kit can't be previewed" to close
-			format gui slot 12 of player with 1 spider eye named "&aViper Kit" with lore "||&eClick to preview" to run player command "/previewkit Viper" with left click
-			format gui slot 13 of player with 1 383:50 named "&aBomber Kit" with lore "||&eClick to preview" to run player command "/previewkit Bomber" with left click
-			format gui slot 14 of player with 1 rotten flesh named "&aNecromancer Kit" with lore "||&eClick to preview" to run player command "/previewkit Necromancer" with left click
-			format gui slot 15 of player with 1 stick named "&aWizard Kit" with lore "||&eClick to preview" to run player command "/previewkit Wizard" with left click
-			format gui slot 16 of player with 1 fishing rod named "&aFisherman Kit" with lore "||&eClick to preview" to run player command "/previewkit Fisherman" with left click
-			format gui slot 17 of player with 1 379 named "&aAlchemist Kit" with lore "||&eClick to preview" to run player command "/previewkit Alchemist" with left click
-			format gui slot 18 of player with 1 redstone named "&aVampire Kit" with lore "||&eClick to preview" to run player command "/previewkit Vampire" with left click
-		else:
-			if arg-1 is "Basic":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aBasic"
-					set slot 0 of player's inventory to 1 iron sword named "&eBasic Sword &7(Right Click)" with lore "||&fAbility: &aBerserk||||&eRight click with your sword to double||&eyour next attack's damage||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBasic Helmet"
-					equip player with iron chestplate named "&eBasic Chestplate"
-					equip player with iron leggings named "&eBasic Leggings"
-					equip player with iron boots named "&eBasic Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Archer":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aArcher"
-					set slot 0 of player's inventory to 1 iron sword named "&eIron Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow of power 1 with no nbt named "&eArcher Bow &7(Left Click)" with lore "||&fAbility: &aQuickfire||||&eLeft click with your bow||&eto shoot flame arrows for &a15s||||&fCooldown: &a20s"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eArcher Helmet"
-					equip player with iron chestplate named "&eArcher Chestplate"
-					equip player with iron leggings named "&eArcher Leggings"
-					equip player with iron boots named "&eArcher Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Blaziken":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aBlaziken"
-					set slot 0 of player's inventory to 1 iron sword named "&eBlaziken Sword &7(Right Click)" with lore "||&fAbility: &aBlazing Inferno||||&eRight click with your sword to ignite||&enearby players||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBlaziken Helmet"
-					equip player with iron chestplate named "&eBlaziken Chestplate"
-					equip player with iron leggings named "&eBlaziken Leggings"
-					equip player with iron boots named "&eBlaziken Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Scout":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aScout"
-					set slot 0 of player's inventory to 1 iron sword with no nbt named "&eScout Sword &7(Right Click)" with lore "||&fAbility: &aAdrenaline||||&eRight click your sword to gain speed II for 10s||&ePlayers you hit take extra knockback||||&eDuration: &a10s||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eScout Helmet"
-					equip player with iron chestplate named "&eScout Chestplate"
-					equip player with iron leggings named "&eScout Leggings"
-					equip player with iron boots named "&eScout Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Medic":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aMedic"
-					set slot 0 of player's inventory to 1 iron sword named "&eMedic Sword &7(Right Click)" with lore "||&fAbility: &aHealing Current||||&eRight click your sword to summon a healing circle||||&fDuration: &e8s||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eMedic Helmet"
-					equip player with iron chestplate named "&eMedic Chestplate"
-					equip player with iron leggings named "&eMedic Leggings"
-					equip player with iron boots named "&eMedic Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "TNT":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aTNT"
-					set slot 0 of player's inventory to 1 iron sword named "&eTNT Sword &7(Right Click)" with lore "||&fAbility: &aDetonate||||&eRight click with your sword to charge your explosion||&ePlayers who are hit by the explosion take dmg and kb||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with tnt named "&eTNT Helmet"
-					equip player with iron chestplate named "&eTNT Chestplate"
-					equip player with diamond leggings of protection 1 with no nbt named "&eTNT Leggings"
-					equip player with iron boots named "&eTNT Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Ghost":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aGhost"
-					set slot 0 of player's inventory to 1 iron sword named "&eGhost Sword &7(Right Click)" with lore "||&fAbility: &aPhantom Drive||||&eRight click with your sword to gain invis II for 5s||&eNearby Players get Blindness for &a3s||||&fDuration: &a5s||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eGhost Helmet"
-					equip player with iron chestplate named "&eGhost Chestplate"
-					equip player with iron leggings named "&eGhost Leggings"
-					equip player with iron boots named "&eGhost Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Kangaroo":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aKangaroo"
-					set slot 0 of player's inventory to 1 iron sword named "&eKangaroo Sword &7(Right Click)" with lore "||&fAbility: &aLeap||||&eRight click with your sword to leap into the air||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eKangaroo Helmet"
-					equip player with iron chestplate named "&eKangaroo Chestplate"
-					equip player with iron leggings named "&eKangaroo Leggings"
-					equip player with iron boots named "&eKangaroo Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Enderman":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aEnderman"
-					set slot 0 of player's inventory to 1 iron sword named "&eEnderman Sword &7(Right Click)" with lore "||&fAbility: &aTeleport||||&eRight click with your sword to teleport behind a random player||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eEnderman Helmet"
-					equip player with iron chestplate named "&eEnderman Chestplate"
-					equip player with iron leggings named "&eEnderman Leggings"
-					equip player with iron boots named "&eEnderman Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Hulk":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aHulk"
-					set slot 0 of player's inventory to 1 iron sword named "&eHulk Sword &7(Right Click)" with lore "||&fAbility: &aGround Slam||||&eRight click with your sword to launch nearby players||&ePlayers take 4 damage when they fall||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eHulk Helmet"
-					equip player with iron chestplate named "&eHulk Chestplate"
-					equip player with iron leggings named "&eHulk Leggings"
-					equip player with diamond boots named "&eHulk Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Enchanter":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aEnchanter"
-					set slot 0 of player's inventory to 1 iron sword named "&eEnchanter Sword &7(Right Click)" with lore "||&fAbility: &aEnchant Storm||||&eRight click with your sword to enchant your sword ||&ewith a random enchantment for &a3s||||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with diamond helmet named "&eEnchanter Helmet"
-					equip player with iron chestplate named "&eEnchanter Chestplate"
-					equip player with iron leggings named "&eEnchanter Leggings"
-					equip player with iron boots named "&eEnchanter Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Viper":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aViper"
-					set slot 0 of player's inventory to 1 iron sword named "&eViper Sword &7(Right Click)" with lore "||&fAbility: &aVenom Strike||||&eRight click your sword to poison and slow nearby players||||&fDuration: &e4s||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eViper Helmet"
-					equip player with iron chestplate named "&eViper Chestplate"
-					equip player with iron leggings named "&eViper Leggings"
-					equip player with iron boots named "&eViper Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-				else:
-					close player's inventory
-					play "VILLAGER_NO" to player at volume 1
-					send "&7You are already previewing a kit"
-			if arg-1 is "Bomber":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aBomber"
-					set slot 0 of player's inventory to 1 iron sword named "&eIron Sword"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 4 of player's inventory to 3 tnt named "&eThrowing TNT &7(Right Click)"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eBomber Helmet"
-					equip player with iron chestplate named "&eBomber Chestplate"
-					equip player with iron leggings named "&eBomber Leggings"
-					equip player with iron boots named "&eBomber Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-			if arg-1 is "Necromancer":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aNecromancer"
-					set slot 0 of player's inventory to 1 iron sword named "&eNecromancer Sword &7(Right Click)" with lore "||&fAbility: &aSummoner's Flute||||&eRight click your sword to summon an undead army||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eNecromancer Helmet"
-					equip player with iron chestplate named "&eNecromancer Chestplate"
-					equip player with iron leggings named "&eNecromancer Leggings"
-					equip player with iron boots named "&eNecromancer Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-			if arg-1 is "Wizard":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aWizard"
-					set slot 0 of player's inventory to 1 iron sword named "&eWizard Sword &7(Right Click)" with lore "||&fAbility: &aDisarm||||&eRight click your sword to disarm a nearby player||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eSorting Hat"
-					equip player with iron chestplate named "&eWizard Chestplate"
-					equip player with iron leggings named "&eWizard Leggings"
-					equip player with iron boots named "&eWizard Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-			if arg-1 is "Fisherman":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aFisherman"
-					set slot 0 of player's inventory to 1 iron sword named "&eFisherman Sword &7(Right Click)" with lore "||&fAbility: &aLure||||&eRight click your sword to lure nearby players in||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eFisherman Helmet"
-					equip player with iron chestplate named "&eFisherman Chestplate"
-					equip player with iron leggings named "&eFisherman Leggings"
-					equip player with iron boots named "&eFisherman Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-			if arg-1 is "Alchemist":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aAlchemist"
-					set slot 0 of player's inventory to 1 iron sword named "&eAlchemist Sword &7(Right Click)" with lore "||&fAbility: &aLure||||&eRight click your sword to gain a random effect||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eAlchemist Helmet"
-					equip player with iron chestplate named "&eAlchemist Chestplate"
-					equip player with iron leggings named "&eAlchemist Leggings"
-					equip player with iron boots named "&eAlchemist Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-			if arg-1 is "Vampire":
-				if {PreviewMode::%UUID of player%} is not set:
-					delete {Gear::%UUID of player%::*}
-					delete {Items::%UUID of player%::*}
-					set {Gear::%UUID of player%::*} to player's helmet, player's chestplate, player's leggings, and player's boots
-					set {Items::%UUID of player%::*} to items in player's inventory
-					close player's inventory
-					clear player's inventory
-					set {PreviewMode::%UUID of player%} to "True"
-					send "&7Previewing Kit: &aVampire"
-					set slot 0 of player's inventory to 1 iron sword named "&eVampire Sword &7(Right Click)" with lore "||&fAbility: &aLife Steal||||&eRight click your sword to regain health||&eequal to half of your attack strength||&fCooldown: &a20s"
-					set slot 1 of player's inventory to 1 fishing rod named "&eFishing Rod"                    
-					set slot 2 of player's inventory to 1 bow named "&eBow"
-					set slot 3 of player's inventory to 16 oak planks named "&eOak Plank"
-					set slot 8 of player's inventory to 1 compass named "&cTracker"
-					set slot 9 of player's inventory to 3 arrows named "&eArrow"
-					give player 35 mushroom stew named "&eMushroom Soup"
-					equip player with iron helmet named "&eVampire Helmet"
-					equip player with iron chestplate named "&eVampire Chestplate"
-					equip player with iron leggings named "&eVampire Leggings"
-					equip player with iron boots named "&eVampire Boots"
-					play "CHICKEN_EGG_POP" to player at volume 1
-					send "&7You have &e30 seconds &7to preview the kit"
-					send "&7Type &a/leavepreview &7to leave"
-					loop 30 times:
-						set the player's level to (30 - loop-number)
-						wait a second
-						if {PreviewMode::%UUID of player%} is not set:
-							exit loop
-					if {PreviewMode::%UUID of player%} is set:
-						clear player's inventory
-						loop {Gear::%UUID of player%::*}:
-							equip player with {Gear::%UUID of player%::*}
-						wait 1 tick
-						add {Items::%UUID of player%::*} to player
-						delete {PreviewMode::%UUID of player%}
-						play "ANVIL_BREAK" to player at volume 1
-						send "&7You have left &aPreview Mode"
-					
-command /leavepreview:
-	trigger:
-		if {PreviewMode::%UUID of player%} is not set:
-			send "&7You are not in &aPreview Mode"
-		else:
-			delete {PreviewMode::%UUID of player%}
-			set player's level to 0
-			send "&7You have left &aPreview Mode"
-			clear player's inventory
-			loop {Gear::%UUID of player%::*}:
-				equip player with {Gear::%UUID of player%::*}
-			wait 1 tick
-			add {Items::%UUID of player%::*} to player
-			
 command /clearkit [<player>]:
 	trigger:
 		if arg-1 is not set:
@@ -3343,25 +2156,6 @@ command /discord:
 		
 on death of player:
 	remove drops from drops
-		
-on death of player:
-	attacker is a player:
-		victim is a player:
-			remove drops from drops
-			wait 1 tick
-			set {_head} to skull of "%victim%" parsed as offline player
-			drop {_head} named "&c%victim%'s Head &7(Right Click)" with lore "||&7Right click to gain regeneration and resistance" 3 meters above the attacker's location
-	
-on rightclick holding a player head:
-	name of player's tool contains "Head":
-		remove 1 player head from player
-		add 1 to {XPupgradepoints::%UUID of player%}
-		send "&7You sold a player head for &a1 XP"
-		drawWarpRings style 22, particle "redstone", RGB 255, 102, 0, center location of player, id "%player%", rainbowMode false, scan false, height 2, radius 1, ringCount 4, ringDensity 22, visibleRange 32
-		wait 1 second
-		stopEffect "%player%"
-		apply potion of regeneration 3 to the player for 4 seconds
-		apply potion of resistance 1 to the player for 4 seconds
 		
 on death of player:
 	damage was caused by potion:
