@@ -45,7 +45,7 @@
 - [ ] King Kit
 
 # Changelog
-- [] Removed XP
+- [X] Removed XP
 - [X] Added HPTHING.sk to KitPvP3.sk
 - [X] Fixed Leaderboard
 - [X] Removed Name, Kit, and XP from Scoreboard
