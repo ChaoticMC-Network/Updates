@@ -57,3 +57,6 @@
 - [X] Removed /settings menu to be added for a later date [To Be Announced]
 - [X] Removed Player Heads due to unfairness
 - [X] For ALL KITS, you gain 3 hearts back when you kill someone to compensate for removal of player heads
+- [X] Removed /DefaultKit, yet /autoKit is still a feature only for staff members
+- [X] You cannot craft crafting tables
+- [X] Fixed Glitch where you could place down the Enchantment Table in the Enchanter Kit
