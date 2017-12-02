@@ -5,7 +5,6 @@
 - [ ] Kit Perks
 - [ ] Cosmetics Unlocker
 - [ ] Chat Color (Donors)
-- [ ] Demolitionist Kit
 - [ ] Kit Abilities Revamp
 - [ ] Scoreboard Changes
 - [ ] New Daily Rewards
@@ -27,13 +26,13 @@
 
 
 # Kits
-- [ ] Farmer Kit (300 COINS)
-- [ ] Spider Kit
-- [ ] Assassin Kit
-- [ ] Miner Kit
-- [ ] Baker Kit
-- [ ] Golem Kit
-- [ ] Villager Kit
+- [X] Farmer Kit (300 COINS)
+- [X] Spider Kit
+- [X] Assassin Kit
+- [X] Miner Kit
+- [X] Baker Kit
+- [X] Golem Kit
+- [X] Villager Kit
 - [ ] Zeus Kit
 - [ ] Flare Kit
 - [ ] Witch Kit
