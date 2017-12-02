@@ -5,8 +5,8 @@
 - [ ] Kit Perks
 - [ ] Cosmetics Unlocker
 - [ ] Chat Color (Donors)
-- [ ] Kit Abilities Revamp
-- [ ] Scoreboard Changes
+- [X] Kit Abilities Revamp
+- [X] Scoreboard Changes
 - [ ] New Daily Rewards
 - [ ] Quests and Achievements
 - [ ]  Dueling
@@ -16,11 +16,11 @@
 - [X] Health Above your head
 - [ ] Ranked Mode
 - [ ] Leveing System
-- [ ] Coin System Changes
-- [ ] Bug Fixes
+- [X] Coin System Changes
+- [X] Bug Fixes
 - [ ] Envoy Event
-- [ ] NEW GUI 
-- [ ] New Map
+- [X] NEW GUI 
+- [X] New Map
 - [ ] Leveling Rewards
 
 
@@ -33,8 +33,8 @@
 - [X] Baker Kit
 - [X] Golem Kit
 - [X] Villager Kit
-- [ ] Zeus Kit
-- [ ] Flare Kit
+- [X] Zeus Kit
+- [X] Flare Kit
 - [ ] Witch Kit
 - [ ] Engineer Kit
 - [ ] Squid Kit
