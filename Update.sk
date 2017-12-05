@@ -1,29 +1,63 @@
-on right click with wheat:
-  if name of player's tool is "&eEgg Storm &f(Right Click)":
-    loop 20 times:
-      make player shoot an egg at speed 2
-
-on projectile hit:
-  if projecitle is an egg:
-    damage the player by 1.5 hearts
-    
-on right click with spider eye:
-  if name of player's tool is "&aPoison Stinger &f(Right Click)":
-    loop 3 times:
-      make player shoot an arrow at speed 2
-   
-on right click with ghast tear:
-  if name of player's tool is "&CBackstab &f(Right Click)":
-    if "%region of {Killer::%UUID of player%}%" is not "Spawn":
-      teleport player to {Killer::%UUID of player%}%"
-     apply potion of strength to player for 3 seconds
-     
-on right click with diamond pickaxe:
-  if name of player's tool is "&aQuick Pick &f(Right Click)":
-    apply potion of haste 2 to player for 5 seconds
-    
-on right click with cake:
-  if name of player's tool is "&6Sugar Rush &f(Right Click)":
-    loop players in radius 5 around player:
-      apply potion of nausea to player for 5 seconds
-      apply potion of speed 2 to player for 3 seconds
+command /missions:
+  description: Main Missions Command
+  aliases: /quests
+  trigger:
+    if {DailyQuests::%UUID of player%} is not true:
+      wait 1 tick
+      open chest with 1 rows named "Quest Menu" to player
+      format gui slot 5 of player with 1 clock named "&6Start Quests" with lore "&7Click to start your daily quests" to run player command "/startquests" with left click
+   else:
+      wait 1 tick
+      open chest with 1 rows named "Quest Menu" to player
+      if {QuestSlot::1::%UUID of player%} is "Kill 25 Players":
+        if {Quest::1::%UUID of player%} is false:
+          format gui slot 0 of player with 1 chest named "&a&lKill 25 Players" with lore "||&7Progress: &a%{Quest1Progress::%UUID of player%}&7/&a25||&7Reward: &e30 Coins" to do nothing
+        else:
+          format gui slot 0 of player with 1 barrier named "&c&lKill 25 Players" with lore "||&7You already completed this quest" to do nothing
+      if {QuestSlot::1::%UUID of player%} is "Get a 5 Killstreak":
+        if {Quest::1::%UUID of player%} is false:
+          format gui slot 0 of player with 1 chest named "&a&lGet a 5 Killstreak" with lore "||&7Progress: &a%{Quest1Progress::%UUID of player%}&7/&a5||&7Reward: &e30 Coins" to do nothing
+        else:
+          format gui slot 0 of player with 1 barrier named "&c&lKill 25 Players" with lore "||&7You already completed this quest" to do nothing
+  
+command /startquests:
+  trigger:
+    if {DailyQuests::%UUID of player%} is not true:
+      set {DailyQuests::%UUID of player%} to true
+      set {_QuestRandomizer} to a random integer between 1 and 5
+      if {_QuestRandomizer} is 1:
+        set {QuestSlot::1::%UUID of player%} to "Kill 25 Players"
+     if {_QuestRandomizer} is 2:
+        set {QuestSlot::1::%UUID of player%} to "Get a 5 Killstreak"
+     if {_QuestRandomizer} is 3:
+        set {QuestSlot::1::%UUID of player%} to "Earn 30 Coins"
+     if {_QuestRandomizer} is 4:
+        set {QuestSlot::1::%UUID of player%} to "Kill a player with a bow"
+     if {_QuestRandomizer} is 5:
+        set {QuestSlot::1::%UUID of player%} to "Get 5 Kill Assists"
+      set {_QuestRandomizer} to a random integer between 1 and 5
+      if {_QuestRandomizer} is 1:
+        set {QuestSlot::2::%UUID of player%} to "Kill 25 Players"
+     if {_QuestRandomizer} is 2:
+        set {QuestSlot::2::%UUID of player%} to "Get a 5 Killstreak"
+     if {_QuestRandomizer} is 3:
+        set {QuestSlot::2::%UUID of player%} to "Earn 30 Coins"
+     if {_QuestRandomizer} is 4:
+        set {QuestSlot::2::%UUID of player%} to "Kill a player with a bow"
+     if {_QuestRandomizer} is 5:
+        set {QuestSlot::2::%UUID of player%} to "Get 5 Kill Assists"
+      set {_QuestRandomizer} to a random integer between 1 and 5
+      if {_QuestRandomizer} is 1:
+        set {QuestSlot::3::%UUID of player%} to "Kill 25 Players"
+     if {_QuestRandomizer} is 2:
+        set {QuestSlot::3::%UUID of player%} to "Get a 5 Killstreak"
+     if {_QuestRandomizer} is 3:
+        set {QuestSlot::3::%UUID of player%} to "Earn 30 Coins"
+     if {_QuestRandomizer} is 4:
+        set {QuestSlot::3::%UUID of player%} to "Kill a player with a bow"
+     if {_QuestRandomizer} is 5:
+        set {QuestSlot::3::%UUID of player%} to "Get 5 Kill Assists"
+     send "&7You have started your daily quests"
+     send "&e&l* &7%{QuestSlot::1::%UUID of player%}%"
+     send "&e&l* &7%{QuestSlot::2::%UUID of player%}%"
+     send "&e&l* &7%{QuestSlot::3::%UUID of player%}%"
