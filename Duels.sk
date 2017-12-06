@@ -1,0 +1,335 @@
+﻿options:
+	prefix: &3Duel &7> &f
+	
+command /dueladm [<text=help>] [<text>]:
+	trigger:
+		if player is op:
+			if arg 1 is "help":
+				message "/dueladm create <nom de l'arène>"
+				message "/dueladm remove <nom de l'arène>"
+				message "/dueladm setspawn1 <nom de l'arène>"
+				message "/dueladm setspawn2 <nom de l'arène>"
+				message "/dueladm setkit <nom de l'arène>"
+				message "/dueladm setlobby"
+				message "/dueladm list"
+				stop
+			
+			if arg 1 is "create":
+				if arg 2 is set:
+					if {duel.arena.%arg 2%} is not set:
+						set {duel.arena.%arg 2%} to true
+						set {duel.arena.setup.%arg 2%} to false
+						set {duel.arena.use.%arg 2%} to false
+						add arg 2 to {duel.arena.list::*}
+						clear {duel.arena.spawn1.%arg 2%} 
+						clear {duel.arena.spawn2.%arg 2%} 
+						message "{@prefix} Arène %arg 2% crée !"
+						stop
+					else:
+						message "{@prefix} L'arène %arg 2% existe déjà..."
+						stop
+				else:
+					message "{@prefix} Usage correct: /dueladm create <nom de l'arène>..."
+					stop
+					
+			if arg 1 is "remove":
+				if arg 2 is set:
+					if {duel.arena.%arg 2%} is true:
+						clear {duel.arena.%arg 2%}
+						clear {duel.arena.setup.%arg 2%}
+						clear {duel.arena.use.%arg 2%} 
+						clear {duel.arena.spawn1.%arg 2%} 
+						clear {duel.arena.spawn2.%arg 2%} 
+						remove arg 2 from {duel.arena.list::*}
+						loop 36 times:
+							clear {duel-kit.%{_count}%.main.%arg 2%}
+							add 1 to {_count}
+						wait 1 tick
+						clear {duel-kit.casque.%arg 2%} 
+						clear {duel-kit.ventre.%arg 2%} 
+						clear {duel-kit.jambes.%arg 2%} 
+						clear {duel-kit.pieds.%arg 2%} 
+						message "{@prefix} Arène %arg 2% supprimée !"
+						stop
+					else:
+						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						stop
+				else:
+					message "{@prefix} Usage correct: /dueladm remove <nom de l'arène>..."
+					stop
+					
+			if arg 1 is "setspawn1":
+				if arg 2 is set:
+					if {duel.arena.%arg 2%} is true:
+						set {duel.arena.spawn1.%arg 2%} to location of player
+						message "{@prefix} Spawn 1 de l'arène %arg 2% placé en %location of player%"
+						if {duel.arena.spawn2.%arg 2%} is set:
+							set {duel.arena.setup.%arg 2%} to true
+						stop
+					else:
+						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						stop
+				else:
+					message "{@prefix} Usage correct: /dueladm setspawn1 <nom de l'arène>..."
+					stop	
+
+			if arg 1 is "setspawn2":
+				if arg 2 is set:
+					if {duel.arena.%arg 2%} is true:
+						set {duel.arena.spawn2.%arg 2%} to location of player
+						message "{@prefix} Spawn 2 de l'arène %arg 2% placé en %location of player%"
+						if {duel.arena.spawn1.%arg 2%} is set:
+							set {duel.arena.setup.%arg 2%} to true
+						stop
+					else:
+						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						stop
+				else:
+					message "{@prefix} Usage correct: /dueladm setspawn2 <nom de l'arène>..."
+					stop
+
+			if arg 1 is "setkit":
+				if arg 2 is set:
+					if {duel.arena.%arg 2%} is true:
+						set {_count} to 0
+						wait 1 tick
+						loop 36 times:
+							set {duel-kit.%{_count}%.main.%arg 2%} to slot {_count} of player's inventory
+							add 1 to {_count}
+							wait 1 tick
+						set {duel-kit.casque.%arg 2%} to player's helmet
+						set {duel-kit.ventre.%arg 2%} to player's chestplate
+						set {duel-kit.jambes.%arg 2%} to player's leggings
+						set {duel-kit.pieds.%arg 2%} to player's boots
+						wait 1 tick
+						clear player's inventory
+						wait 1 tick
+						set {_count} to 0
+						wait 1 tick
+						loop 36 times:
+							set slot {_count} of player's inventory to {duel-kit.%{_count}%.main.%arg 2%}
+							add 1 to {_count}
+							wait 0.5 tick
+						set the helmet of player to {duel-kit.casque.%arg 2%}
+						set the chestplate of player to {duel-kit.ventre.%arg 2%}
+						set the leggings of player to {duel-kit.jambes.%arg 2%}
+						set the boots of player to {duel-kit.pieds.%arg 2%}
+						message "{@prefix} Kit de l'arène %arg 2% sauvegardé..."
+						stop
+					else:
+						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						stop
+				else:
+					message "{@prefix} Usage correct: /dueladm setkit <nom de l'arène>..."
+					stop		
+					
+			if arg 1 is "setlobby":
+				set {duel.lobby} to location of player
+				message "{@prefix} Lobby placé en %location of player%"
+				stop
+				
+			if arg 1 is "list":
+				clear {_list::*}
+				loop {duel.arena.list::*}:
+					if {duel.arena.use.%loop-value%} is true:
+						add "&c%loop-value%" to {_list::*}
+					if {duel.arena.use.%loop-value%} is false:
+						add "&a%loop-value%" to {_list::*}
+				set {_list} to "%{_list::*}%"
+				replace all "and" with "et" in {_list}
+				if {_list} is "<none>" or " ":
+					set {_list} to "&4AUCUNE ARÈNE"
+					
+				message "{@prefix} Liste des arènes : %{_list}%"
+				message " "
+				message "&a• Vert = Arène disponible"
+				message "&c• Rouge = Arène indisponible"
+				stop
+				
+				
+command /duel [<text>]:
+	trigger:
+		if {duel.in-duel.%player%} is not set:
+			set {duel.in-duel.%player%} to false
+		if arg 1 is set:
+			set {_verif} to 0
+			if "%arg 1%" is "%player%":
+				message "{@prefix} &cTu ne peux pas te défier toi même..."
+				stop
+			loop all players:
+				if "%arg 1%" is "%loop-player%":
+					add 1 to {_verif}
+					if {duel.in-duel.%loop-player%} is true:
+						message "{@prefix} %loop-player% est déjà en duel..." to player
+						stop
+					message "{@prefix} Tu as demandé %loop-player% en duel..." to player
+					message "{@prefix} %player% t'as demandé en duel... Fais /accept ou /deny." to loop-player
+					set {duel.last-invite.%loop-player%} to player
+					wait 5 minutes
+					if {duel.in-duel.%loop-player%} is true:
+						stop
+					clear {duel.last-invite.%loop-player%}
+					stop
+			
+			if {_verif} is 0:
+				message "{@prefix} %arg 1% n'est pas connecté ou n'existe pas..."
+				stop
+		
+		else:
+			message "{@prefix} Usage correct: /duel <joueur>..."
+	
+				
+command /deny:
+	trigger:
+		if {duel.in-duel.%player%} is not set:
+			set {duel.in-duel.%player%} to false
+			
+		if {duel.last-invite.%player%} is not set:
+			message "{@prefix} Personne ne t'as demandé en duel..."
+			stop
+			
+		loop all players:
+			if "%{duel.last-invite.%player%}%" is "%loop-player%":
+				message "{@prefix} Tu as refusé le duel de %loop-player%..." to player
+				message "{@prefix} %player% a refusé ton duel..." to loop-player
+				clear {duel.last-invite.%player%}
+				stop
+		clear {duel.last-invite.%player%}
+		stop
+		
+		
+command /accept:
+	trigger:
+		if {duel.in-duel.%player%} is not set:
+			set {duel.in-duel.%player%} to false
+			
+		if {duel.last-invite.%player%} is not set:
+			message "{@prefix} Personne ne t'as demandé en duel..."
+			stop
+			
+		set {_verif} to 0
+		loop all players:
+			if "%{duel.last-invite.%player%}%" is "%loop-player%":
+				if {duel.in-duel.%loop-player%} is true:
+					message "{@prefix} %loop-player% est déjà en duel..."
+					stop
+					
+				while {duel.in-duel.%player%} is false:
+					loop {duel.arena.list::*}:
+						if {duel.arena.setup.%loop-value-2%} is true:
+							if {duel.arena.use.%loop-value-2%} is false:
+								if {duel.in-duel.%loop-player%} is false:
+									set {duel.in-duel.%player%} to true
+									set {duel.in-duel.%loop-player%} to true
+									
+									set {duel.in-arena.%player%} to loop-value-2
+									set {duel.in-arena.%loop-player%} to loop-value-2
+									
+									clear player's inventory
+									clear loop-player's inventory
+									set player's gamemode to adventure
+									set loop-player's gamemode to adventure
+									heal the player
+									heal the loop-player
+									set player's food to 10
+									set loop-player's food to 10
+									wait 1 tick
+									set {_count} to 0
+									wait 1 tick
+									loop 36 times:
+										set slot {_count} of player's inventory to {duel-kit.%{_count}%.main.%loop-value-2%}
+										set slot {_count} of loop-player's inventory to {duel-kit.%{_count}%.main.%loop-value-2%}
+										add 1 to {_count}
+									set the helmet of player to {duel-kit.casque.%loop-value-2%}
+									set the chestplate of player to {duel-kit.ventre.%loop-value-2%}
+									set the leggings of player to {duel-kit.jambes.%loop-value-2%}
+									set the boots of player to {duel-kit.pieds.%loop-value-2%}
+									
+									set the helmet of loop-player to {duel-kit.casque.%loop-value-2%}
+									set the chestplate of loop-player to {duel-kit.ventre.%loop-value-2%}
+									set the leggings of loop-player to {duel-kit.jambes.%loop-value-2%}
+									set the boots of loop-player to {duel-kit.pieds.%loop-value-2%}
+									
+									teleport player at {duel.arena.spawn1.%loop-value-2%}
+									teleport loop-player at {duel.arena.spawn2.%loop-value-2%}
+									
+									set {duel.arena.use.%loop-value-2%} to true
+									
+									message "{@prefix} Le duel commence..." to player
+									message "{@prefix} Le duel commence..." to loop-player
+									
+									clear {duel.last-invite.%player%}
+									clear {duel.last-invite.%loop-player%}
+									stop
+								else:
+									message "{@prefix} %loop-player% est maintenant en duel..."
+									clear {duel.last-invite.%player%}
+									stop
+					wait 1 seconds
+					message "{@prefix} Aucune arène disponible... Nouvelle recherche..." to player			
+					message "{@prefix} Aucune arène disponible... Nouvelle recherche..." to loop-player			
+								
+on death of player:
+	if {duel.in-duel.%victim%} is true:
+		clear drops
+		if attacker is a player:
+			set death message "{@prefix} %attacker% (&c&l%health of attacker% &c♥&f) a gagné son duel contre %victim%"
+			set {duel.in-duel.%victim%} to false
+			set {duel.in-duel.%attacker%} to false
+			
+			set {duel.arena.use.%{duel.in-arena.%attacker%}%} to false
+			
+			clear {duel.in-arena.%attacker%}
+			clear {duel.in-arena.%victim%}
+			clear attacker's inventory
+			heal the attacker
+			teleport attacker at {duel.lobby}
+			set attacker's gamemode to survival
+			set victim's gamemode to survival
+			
+			stop
+			
+		else:
+			loop all players:
+				if {duel.in-duel.%loop-player%} is true:
+					if "%{duel.in-arena.%loop-player%}%" is "%{duel.in-arena.%victim%}%":
+						set death message "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) a gagné son duel contre %victim%"
+						set {duel.in-duel.%victim%} to false
+						set {duel.in-duel.%loop-player%} to false
+						
+						set {duel.arena.use.%{duel.in-arena.%loop-player%}%} to false
+						
+						clear {duel.in-arena.%loop-player%}
+						clear {duel.in-arena.%victim%}
+						clear loop-player's inventory
+						heal the loop-player
+						teleport loop-player at {duel.lobby}
+						set loop-player's gamemode to survival
+						set victim's gamemode to survival
+						
+						stop
+						
+						
+on quit:
+	if {duel.in-duel.%player%} is true:
+		loop all players:
+			if {duel.in-duel.%loop-player%} is true:
+				if "%{duel.in-arena.%loop-player%}%" is "%{duel.in-arena.%player%}%":
+					set leave message to "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) a gagné son duel contre %player%"
+					set {duel.in-duel.%player%} to false
+					set {duel.in-duel.%loop-player%} to false
+					
+					set {duel.arena.use.%{duel.in-arena.%loop-player%}%} to false
+					
+					clear {duel.in-arena.%loop-player%}
+					clear {duel.in-arena.%player%}
+					clear loop-player's inventory
+					heal the loop-player
+					teleport loop-player at {duel.lobby}
+					set loop-player's gamemode to survival
+					set player's gamemode to survival
+					
+					stop
+					
+on join:
+	clear {duel.in-duel.%player%}
