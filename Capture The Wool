@@ -1,0 +1,357 @@
+options:
+	Wins: 3 #Max wins till round over
+command /ctf:
+	trigger:
+		if {CTF_ACTIVE::%player%} is true:
+			set {CTF_ACTIVE::%player%} to false
+			send "&8[&cWarzone&8] &7You left the CTF Arena"
+			delete {CTF_TEAM::%player%}
+			clear player's inventory
+		else:
+			set {CTF_ACTIVE::%player%} to true
+      set {_TeamSelector} to a random integer between 1 and 2
+			if {_TeamSelector} is 1:
+			  set {CTF_TEAM::%player%} to "Red"
+			  send "&8[&cWarzone&8] &7You joined the &cRED TEAM"
+      if {_TeamSelector} is 2:
+        set {CTF_TEAM::%player%} to "Blue"
+        send "&8[&cWarzone&8] &7You joined the &9BLUE TEAM"
+command /ctfadmin [<text>] [<text>]:
+	trigger:
+		if sender is player:
+			if player is not op:
+				send "&8[&cWarzone&8] &7You don't have permission"
+				stop
+		if arg 1 is set:
+			if arg 1 is "spawn":
+				if arg 2 is "red":
+					set {CTF::RedSpawn} to player's location
+					send "&8[&cWarzone&8] &7You set the spawnpoint for &cRED TEAM"
+				else if arg 2 is "blue":
+					set {CTF::BlueSpawn} to player's location
+					send "&8[&cWarzone&8] &7You set the spawnpoint for &9BLUE TEAM"
+				else:
+					send "&8[&cWarzone&8] &7Invalid Team, you must select either &cRED &7or &9BLUE"
+			else if arg 1 is "woolspawn" or "wool" or "flag" or "Flagspawn":
+				if arg 2 is "red":
+					set block at {CTF::RedFlagLoc} to air
+					set {CTF::RedFlagLoc} to player's location
+					send "&8[&cWarzone&8] &7Successfully set &fFlag Spawnpoint &7for &cRED TEAM"
+					set block at {CTF::RedFlagLoc} to red wool
+				else if arg 2 is "blue":
+					set block at {CTF::BlueFlagLoc} to air
+					set {CTF::BlueFlagLoc} to player's location
+					send "&8[&cWarzone&8] &7Successfully set &fFlag Spawnpoint &7for &9BLUE TEAM"
+					set block at {CTF::BlueFlagLoc} to blue wool
+				else:
+					send "&8[&cWarzone&8] &7Invalid Team, you must select either &cRED &7or &9BLUE"
+			else if arg 1 is "return" or "capture":
+				if arg 2 is "red":
+					set {CTF::RedTeamCapture} to player's location
+					send "&8[&cWarzone&8] &7Successfully set &fCapture Point &7for &cRED TEAM"
+				else if arg 2 is "blue":
+					set {CTF::BlueTeamCapture} to player's location
+					send "&8[&cWarzone&8] &7Successfully set &fCapture Point &7for &9BLUE TEAM"
+				else:
+					send "&8[&cWarzone&8] &7Invalid Team, you must select either &cRED &7or &9BLUE"
+			else if arg 1 is "reload":
+				run player command "/skript reload CaptureTheWool" as op
+			else if arg 1 is "reset" or "refresh" or "restart" or "resetmap":
+				broadcast "&8[&cWarzone&8] &7Map has been reset"
+				set block at {CTF::RedTeamCapture} to air
+				set block at {CTF::BlueTeamCapture} to air
+				set block at {CTF::RedFlagLoc} to red wool
+				set block at {CTF::BlueFlagLoc} to blue wool
+				set {CTF_WINS::red} to 0
+				set {CTF_WINS::blue} to 0
+				set {CTF_WINACTIVE} to false
+				loop all players:
+					{CTF_ACTIVE::%loop-player%} is true
+					if {CTF_TEAM::%loop-player%} is "blue":
+						teleport loop-player to {CTF::BlueSpawn}
+					else if {CTF_TEAM::%loop-player%} is "red":
+						teleport loop-player to {CTF::RedSpawn}
+			else:
+				send "&8[&cWarzone&8] &7Cannot recoginize command"
+		else:
+			send "&8[&cWarzone&8] &7You must specify an action"
+      send "&8[&cWarzone&8] &7ResetMap, Referesh, Reset, Restart, Reload, Woolspawn, Wool, Flag, FlagSpawn, Spawn"
+on leftclick on wool:
+	{CTF_ACTIVE::%player%} is true
+	send "&8[&cWarzone&8] &eRight-click &7to take the flag"
+	cancel event
+on break:
+	player is not op
+	{CTF_ACTIVE::%player%} is true
+	cancel event
+	send action bar from "&cBlock Breaking is Disabled" to player
+on rightclick:
+	{CTF_ACTIVE::%player%} is true
+	if event-block is door or wooden door or iron door or trapdoor:
+		player's gamemode is not creative
+		cancel event
+		stop
+	player's gamemode is not creative
+	event-block is not wool
+	player is not holding sword or bow or wool
+	cancel event
+	
+every second:
+	if {CTF_WINS::blue} is greater than {@Wins} - 1:
+		set {CTF_WINACTIVE} to true
+		set {CTF_WINS::Blue} to 0
+		set {CTF_WINS::Red} to 0
+		loop all players:
+			if {CTF_ACTIVE::%loop-player%} is true:
+				loop 40 times:
+					send "" to loop-player
+		broadcast "&8[&cWarzone&8] &9BLUE TEAM &7has won the game!"
+		wait 4 seconds
+		set {_counter} to 60
+		broadcast "&8[&cWarzone&8] &7Resetting the game in &a%{_counter}% seconds"
+		loop 60 times:
+			remove 1 from {_counter}
+			if {_counter} is less than 1:
+				execute console command "/ctfadmin reset"
+				set {CTF_WINACTIVE} to false
+			loop all players:
+				if {CTF_ACTIVE::%loop-player%} is true:
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+			wait 1 second
+	else if {CTF_WINS::red} is greater than {@Wins} - 1:
+		set {CTF_WINACTIVE} to true
+		set {CTF_WINS::Blue} to 0
+		set {CTF_WINS::Red} to 0
+		loop all players:
+			if {CTF_ACTIVE::%loop-player%} is true:
+				loop 40 times:
+					send "" to loop-player
+    loop all players:
+      if {CTF_TEAM::%loop-player%} is "Red":
+        add 10 to {Coins::%UUID of loop-player%}
+        send "&6+ 10 Coins &a(Won Game)" to loop-player
+      if {CTF_TEAM::%loop-player%} is "Blue":
+        add 5 to {Coins::%UUID of loop-player%}
+        send "&6+ 5 Coins &c(Lost Game)" to loop-player
+		broadcast "&8[&cWarzone&8] &cRED TEAM &7has won the game!"
+		wait 4 seconds
+		set {_counter} to 60
+		broadcast "&8[&cWarzone&8] &7Resetting the game in &a%{_counter}% seconds"
+		loop 50 times:
+			remove 1 from {_counter}
+			if {_counter} is less than 1:
+				execute console command "/ctfadmin reset"
+				set {CTF_WINACTIVE} to false
+			loop all players:
+				if {CTF_ACTIVE::%loop-player%} is true:
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+					send action bar from "&7Resetting game in &6%{_counter}%sec" to loop-player
+			wait 1 second
+on rightclick on sticky piston holding wool:
+	if {CTF_WINACTIVE} is true:
+		cancel event
+		send "&8[&cWarzone&8] &7The game is over, wait till the next round"
+		stop
+	{CTF_ACTIVE::%player%} is true
+	cancel event
+	if {CTF_TEAM::%player%} is "blue":
+		set block at {CTF::BlueTeamCapture} to red wool
+		remove 1 red wool from player
+		delete {CTF_FLAGS::RedTaker}
+		set {CTF::TookRedFlag::%player%} to false
+		add 1 to {CTF_WINS::blue}
+		broadcast "&8[&cWarzone&8] &8(&a%{CTF_WINS::blue}%&7/&a3&8) &9&l%player% &7captured the &c&lRED TEAM FLAG"
+    loop all players:
+      if {CTF_TEAM::%loop-player%} is "Red":
+      send action bar from "&e⚠ &cYour Flag Was Taken &e⚠" to loop-player
+		wait 5 seconds
+		broadcast "&8[&cWarzone&8] &7Respawning &cRED TEAM FLAG"
+		wait 10 seconds
+		broadcast "&8[&cWarzone&8] &7The &cRED TEAM FLAG &7has been respawned"
+		set block at {CTF::BlueTeamCapture} to air
+		set block at {CTF::RedFlagLoc} to red wool
+	else:
+		send "&8[&cWarzone&8] &7You cannot capture your own Wool"
+on chat:
+	{CTF_ACTIVE::%player%} is true
+  loop all players:
+  	if {CTF_TEAM::%loop-player%} is "red":
+		  send "&c[RED] %loop-player%: &7%message%" to loop-player
+		  cancel event
+  	else if {CTF_TEAM::%loop-player%} is "blue":
+		  broadcast "&9[BLUE] %loop-player%: &7%message%" to loop-player%
+		  cancel event
+		
+on rightclick on piston:
+	if {CTF_WINACTIVE} is true:
+		cancel event
+		send "&8[&cWarzone&8] &7The game is over, wait until the next round"
+		stop
+	{CTF_ACTIVE::%player%} is true
+	cancel event
+	if {CTF_TEAM::%player%} is "red":
+		set block at {CTF::RedTeamCapture} to blue wool
+		remove 1 blue wool from player
+		delete {CTF_FLAGS::BlueTaker}
+		set {CTF::TookBlueFlag::%player%} to false
+		add 1 to {CTF_WINS::red}
+		broadcast "&9CTF> &6[%{CTF_WINS::red}%/3] &e%player% &7captured the &bBlue Team's&7 Flag!"
+		wait 5 seconds
+		broadcast "&9CTF> &7Respawning Blue Flag..."
+		wait 10 seconds
+		broadcast "&9CTF> &bBlue Team Flag &7has been respawned!"
+		set block at {CTF::RedTeamCapture} to air
+		set block at {CTF::blueFlagLoc} to blue wool
+	else:
+		send "&9CTF> &cWrong side! This is the other team's"
+on rightclick holding red wool:
+	{CTF_ACTIVE::%player%} is true
+	#cancel event
+on damage:
+	{CTF_ACTIVE::%victim%} is true
+	{CTF_ACTIVE::%attacker%} is true
+	if {CTF_TEAM::%attacker%} is {CTF_TEAM::%victim%}:
+		cancel event
+on respawn:
+	{CTF_ACTIVE::%player%} is true
+	if {CTF_TEAM::%player%} is "blue":
+		teleport player to {CTF::Bluespawn}
+	else if {CTF_TEAM::%player%} is "red":
+		teleport player to {CTF::Redspawn}
+		
+on death:
+	victim is player
+	{CTF_ACTIVE::%victim%} is true
+	set death message to ""
+	if {CTF_WINACTIVE} is true:
+		broadcast "&9CTF> &e%victim% &7was murdered by &e%attacker%"
+		stop
+	if {CTF_TEAM::%player%} is "blue":
+		if {CTF::TookRedFlag::%player%} is true:
+			wait 1 ticks
+			teleport player to {CTF::BlueSpawn}
+			set block at {CTF::RedFlagLoc} to red wool
+			remove all wool from player's inventory
+			broadcast "&9CTF> &e%victim% &7was killed by &e%attacker%, &7and dropped the &cRed Team's&7 Flag!"
+			delete {CTF_FLAGS::RedTaker}
+			set {CTF::TookRedFlag::%player%} to false
+		else:
+			broadcast "&9CTF> &e%victim% &7was murdered by &e%attacker%"
+			teleport player to {CTF::BlueSpawn}
+	else if {CTF_TEAM::%player%} is "red":
+		if {CTF::TookBlueFlag::%player%} is true:
+			wait 1 tick
+			teleport player to {CTF::Redspawn}
+			set block at {CTF::blueFlagLoc} to blue wool
+			remove all wool from player's inventory
+			broadcast "&9CTF> &e%victim% &7was killed by &e%attacker%, &7and dropped the &bBlue Team's&7 Flag!"
+			delete {CTF_FLAGS::BlueTaker}
+			set {CTF::TookBlueFlag::%player%} to false
+		else:
+			broadcast "&9CTF> &e%victim% &7was murdered by &e%attacker%"
+			teleport player to {CTF::Redspawn}
+			
+	#probably start a countdown
+				#stuff
+on drop of wool:
+	if {CTF_ACTIVE::%player%} is true:
+		if {CTF_TEAM::%player%} is "red":
+			if {CTF::TookBlueFlag::%player%} is true:
+				broadcast "&9CTF> &e%player% &7dropped the &bBlue Flag!"
+		else if {CTF_TEAM::%player%} is "blue":
+			if {CTF::TookRedFlag::%player%} is true:
+				broadcast "&9CTF> &e%player% &7dropped the &cRed Flag!"
+on pickup of red wool:
+	{CTF_ACTIVE::%player%}
+	if {CTF_TEAM::%player%} is "red":
+		cancel event
+		broadcast "&9CTF> &cRed Team &7returned their flag!"
+		set block at {CTF::RedFlagLoc} to red wool
+		delete event-entity
+	else if {CTF_TEAM::%player%} is "blue":
+		set {CTF_FLAGS::RedTaker} to "%player%"
+		set {CTF::TookRedFlag::%player%} to true
+		broadcast "&9CTF> &e%player% &7picked up the &cRed Flag"
+	else:
+		broadcast "Wtf did u do caeden"
+on pickup of blue wool:
+	{CTF_ACTIVE::%player%}
+	if {CTF_TEAM::%player%} is "blue":
+		cancel event
+		delete event-entity
+		broadcast "&9CTF> &bBlue Team &7returned their flag!"
+		set block at {CTF::BlueFlagLoc} to blue wool
+	else if {CTF_TEAM::%player%} is "red":
+		broadcast "&9CTF> &e%player% &7picked up the &bBlue Flag"
+		set {CTF_FLAGS::BlueTaker} to "%player%"
+		set {CTF::TookBlueFlag::%player%} to true
+	else:
+		broadcast "Wtf did u do caeden"
+command /join <text> [<player=%player%>]:
+	trigger:
+		if arg 1 is "red":
+			send "&9CTF> &7You joined the &cRed Team" to arg 2
+			teleport arg 2 to {CTF::RedSpawn}
+			set {CTF_ACTIVE::%arg 2%} to true
+			set {CTF_TEAM::%arg 2%} to "red"
+			clear arg 2's inventory
+			give arg-2 1 iron sword
+			give arg-2 1 bow of infinity 1
+			give arg-2 1 arrow
+			give arg-2 64 steak
+			equip arg-2 with a leather helmet colored red
+			equip arg-2 with leather boots colored red
+			equip arg-2 with iron chestplate
+			equip arg-2 with iron leggings
+		else if arg 1 is "blue":
+			send "&9CTF> &7You joined the &bBlue Team" to arg 2
+			teleport arg 2 to {CTF::BlueSpawn}
+			set {CTF_ACTIVE::%arg 2%} to true
+			set {CTF_TEAM::%arg 2%} to "blue"
+			clear arg 2's inventory
+			give arg-2 1 iron sword
+			give arg-2 1 bow of infinity 1
+			give arg-2 1 arrow
+			give arg-2 64 steak
+			equip arg-2 with a leather helmet colored blue
+			equip arg-2 with leather boots colored blue
+			equip arg-2 with iron chestplate
+			equip arg-2 with iron leggings
+on rightclick on blue wool:
+	if {CTF_WINACTIVE} is true:
+		cancel event
+		send "&9CTF> &cThe game is over, wait till next round!"
+		stop
+	{CTF_ACTIVE::%player%} is true
+	if block below event-block is piston or sticky piston or piston base or sticky piston base:
+		send "&9CTF> &cYou can't take this wool!"
+		cancel event
+		stop
+	if {CTF_TEAM::%player%} is "red":
+		set event-block to air
+		give player 1 blue wool named "&b&lBLUE FLAG"
+		set {CTF_FLAGS::BlueTaker} to "%player%"
+		set {CTF::TookBlueFlag::%player%} to true
+		broadcast "&9CTF> &e%player% &7took the &bBlue Team's&7 Flag!"
+	else:
+		send "&9CTF> &cThat's your own flag!"
+on rightclick on red wool:
+	if {CTF_WINACTIVE} is true:
+		cancel event
+		send "&9CTF> &cThe game is over, wait till next round!"
+		stop
+	{CTF_ACTIVE::%player%} is true
+	if block below event-block is piston or sticky piston or piston base or sticky piston base:
+		send "&9CTF> &cYou can't take this wool!"
+		stop
+	if {CTF_TEAM::%player%} is "blue":
+		set event-block to air
+		give player 1 red wool named "&4&lRED FLAG"
+		set {CTF_FLAGS::RedTaker} to "%player%"
+		set {CTF::TookRedFlag::%player%} to true
+		broadcast "&9CTF> &e%player% &7took the &cRed Team's&7 Flag!"
+	else:
+		send "&9CTF> &cThat's your own flag!"
