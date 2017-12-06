@@ -1,15 +1,12 @@
-﻿options:
-	prefix: &3Duel &7> &f
-	
 command /dueladm [<text=help>] [<text>]:
 	trigger:
 		if player is op:
 			if arg 1 is "help":
-				message "/dueladm create <nom de l'arène>"
-				message "/dueladm remove <nom de l'arène>"
-				message "/dueladm setspawn1 <nom de l'arène>"
-				message "/dueladm setspawn2 <nom de l'arène>"
-				message "/dueladm setkit <nom de l'arène>"
+				message "/dueladm create (Name of Arena)"
+				message "/dueladm remove (Name of Arena)"
+				message "/dueladm setspawn1 (Name of Arena)"
+				message "/dueladm setspawn2 (Name of Arena)"
+				message "/dueladm setkit (Name of Arena)"
 				message "/dueladm setlobby"
 				message "/dueladm list"
 				stop
@@ -23,13 +20,13 @@ command /dueladm [<text=help>] [<text>]:
 						add arg 2 to {duel.arena.list::*}
 						clear {duel.arena.spawn1.%arg 2%} 
 						clear {duel.arena.spawn2.%arg 2%} 
-						message "{@prefix} Arène %arg 2% crée !"
+						message "&7Successfully create arena &6%arg-2%"
 						stop
 					else:
-						message "{@prefix} L'arène %arg 2% existe déjà..."
+						message "&7Error, Arena &6%arg-2% &7already exists"
 						stop
 				else:
-					message "{@prefix} Usage correct: /dueladm create <nom de l'arène>..."
+					message "Correct Usage: /dueladm create (Name of Arena)"
 					stop
 					
 			if arg 1 is "remove":
@@ -45,47 +42,47 @@ command /dueladm [<text=help>] [<text>]:
 							clear {duel-kit.%{_count}%.main.%arg 2%}
 							add 1 to {_count}
 						wait 1 tick
-						clear {duel-kit.casque.%arg 2%} 
-						clear {duel-kit.ventre.%arg 2%} 
-						clear {duel-kit.jambes.%arg 2%} 
-						clear {duel-kit.pieds.%arg 2%} 
-						message "{@prefix} Arène %arg 2% supprimée !"
+						clear {duel-kit.helmet.%arg 2%} 
+						clear {duel-kit.chestplate.%arg 2%} 
+						clear {duel-kit.leggings.%arg 2%} 
+						clear {duel-kit.boots.%arg 2%} 
+						message "&7Successfully removed arena &6%arg-2%"
 						stop
 					else:
-						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						message "&7Error, Arena &6%arg-2% &7does not exisits"
 						stop
 				else:
-					message "{@prefix} Usage correct: /dueladm remove <nom de l'arène>..."
+					message "Correct Usage: /dueladm remove (Name of Arena)"
 					stop
 					
 			if arg 1 is "setspawn1":
 				if arg 2 is set:
 					if {duel.arena.%arg 2%} is true:
 						set {duel.arena.spawn1.%arg 2%} to location of player
-						message "{@prefix} Spawn 1 de l'arène %arg 2% placé en %location of player%"
+						message "&7Spawn1 for arena &6%arg-2% &7has been set"
 						if {duel.arena.spawn2.%arg 2%} is set:
 							set {duel.arena.setup.%arg 2%} to true
 						stop
 					else:
-						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						message "&7Error, Arena &6%arg-2% &7does not exist"
 						stop
 				else:
-					message "{@prefix} Usage correct: /dueladm setspawn1 <nom de l'arène>..."
+					message "Correct Usage: /dueladm setspawn1 (Name of Arena)"
 					stop	
 
 			if arg 1 is "setspawn2":
 				if arg 2 is set:
 					if {duel.arena.%arg 2%} is true:
 						set {duel.arena.spawn2.%arg 2%} to location of player
-						message "{@prefix} Spawn 2 de l'arène %arg 2% placé en %location of player%"
+						message "&7Spawn2 &7for arena &6%arg-2% &7has been set"
 						if {duel.arena.spawn1.%arg 2%} is set:
 							set {duel.arena.setup.%arg 2%} to true
 						stop
 					else:
-						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						message "&7Error, Arena &6%arg-2% &7does not exist."
 						stop
 				else:
-					message "{@prefix} Usage correct: /dueladm setspawn2 <nom de l'arène>..."
+					message "Correct Usage: /dueladm setspawn2 (Name of Arena)"
 					stop
 
 			if arg 1 is "setkit":
@@ -97,10 +94,10 @@ command /dueladm [<text=help>] [<text>]:
 							set {duel-kit.%{_count}%.main.%arg 2%} to slot {_count} of player's inventory
 							add 1 to {_count}
 							wait 1 tick
-						set {duel-kit.casque.%arg 2%} to player's helmet
-						set {duel-kit.ventre.%arg 2%} to player's chestplate
-						set {duel-kit.jambes.%arg 2%} to player's leggings
-						set {duel-kit.pieds.%arg 2%} to player's boots
+						set {duel-kit.helmet.%arg 2%} to player's helmet
+						set {duel-kit.chestplate.%arg 2%} to player's chestplate
+						set {duel-kit.leggings.%arg 2%} to player's leggings
+						set {duel-kit.boots.%arg 2%} to player's boots
 						wait 1 tick
 						clear player's inventory
 						wait 1 tick
@@ -110,17 +107,17 @@ command /dueladm [<text=help>] [<text>]:
 							set slot {_count} of player's inventory to {duel-kit.%{_count}%.main.%arg 2%}
 							add 1 to {_count}
 							wait 0.5 tick
-						set the helmet of player to {duel-kit.casque.%arg 2%}
-						set the chestplate of player to {duel-kit.ventre.%arg 2%}
-						set the leggings of player to {duel-kit.jambes.%arg 2%}
-						set the boots of player to {duel-kit.pieds.%arg 2%}
-						message "{@prefix} Kit de l'arène %arg 2% sauvegardé..."
+						set the helmet of player to {duel-kit.helmet.%arg 2%}
+						set the chestplate of player to {duel-kit.chestplate.%arg 2%}
+						set the leggings of player to {duel-kit.leggings.%arg 2%}
+						set the boots of player to {duel-kit.boots.%arg 2%}
+						message "&7Successfully saved kit for Arena &6%arg-2%"
 						stop
 					else:
-						message "{@prefix} L'arène %arg 2% n'existe pas..."
+						message "&7Error, Arena &6%arg-2% &7does not exist"
 						stop
 				else:
-					message "{@prefix} Usage correct: /dueladm setkit <nom de l'arène>..."
+					message "Correct Usage: /dueladm setkit (Name of Arena)"
 					stop		
 					
 			if arg 1 is "setlobby":
@@ -136,14 +133,13 @@ command /dueladm [<text=help>] [<text>]:
 					if {duel.arena.use.%loop-value%} is false:
 						add "&a%loop-value%" to {_list::*}
 				set {_list} to "%{_list::*}%"
-				replace all "and" with "et" in {_list}
 				if {_list} is "<none>" or " ":
-					set {_list} to "&4AUCUNE ARÈNE"
+					set {_list} to "&cNo Arenas Listed"
 					
-				message "{@prefix} Liste des arènes : %{_list}%"
+				message "&7List of Arenas: %{_list}%"
 				message " "
-				message "&a• Vert = Arène disponible"
-				message "&c• Rouge = Arène indisponible"
+				message "&a• Green = &aAvailable"
+				message "&c• Red = &cUnavailable"
 				stop
 				
 				
@@ -154,16 +150,16 @@ command /duel [<text>]:
 		if arg 1 is set:
 			set {_verif} to 0
 			if "%arg 1%" is "%player%":
-				message "{@prefix} &cTu ne peux pas te défier toi même..."
+				message "&7Error, you can't duel yourself"
 				stop
 			loop all players:
 				if "%arg 1%" is "%loop-player%":
 					add 1 to {_verif}
 					if {duel.in-duel.%loop-player%} is true:
-						message "{@prefix} %loop-player% est déjà en duel..." to player
+						message "&e%loop-player% &7is already in a duel" to player
 						stop
-					message "{@prefix} Tu as demandé %loop-player% en duel..." to player
-					message "{@prefix} %player% t'as demandé en duel... Fais /accept ou /deny." to loop-player
+					message "&7You sent a duel request to &e%loop-player%" to player
+					message "&e%player% &7has requested a duel. &a/accept &7or &c/deny" to loop-player
 					set {duel.last-invite.%loop-player%} to player
 					wait 5 minutes
 					if {duel.in-duel.%loop-player%} is true:
@@ -172,11 +168,11 @@ command /duel [<text>]:
 					stop
 			
 			if {_verif} is 0:
-				message "{@prefix} %arg 1% n'est pas connecté ou n'existe pas..."
+				message "&7Error, &e%arg-1% &7is not &aconnected &7or does not exist"
 				stop
 		
 		else:
-			message "{@prefix} Usage correct: /duel <joueur>..."
+			message "Correct Usage: /duel (Player)"
 	
 				
 command /deny:
@@ -185,13 +181,13 @@ command /deny:
 			set {duel.in-duel.%player%} to false
 			
 		if {duel.last-invite.%player%} is not set:
-			message "{@prefix} Personne ne t'as demandé en duel..."
+			message "&7Nobody has ask you for a duel recently"
 			stop
 			
 		loop all players:
 			if "%{duel.last-invite.%player%}%" is "%loop-player%":
-				message "{@prefix} Tu as refusé le duel de %loop-player%..." to player
-				message "{@prefix} %player% a refusé ton duel..." to loop-player
+				message "&7You refused the duel request of &e%loop-player%" to player
+				message "&e%player% &7denied your duel request" to loop-player
 				clear {duel.last-invite.%player%}
 				stop
 		clear {duel.last-invite.%player%}
@@ -204,14 +200,14 @@ command /accept:
 			set {duel.in-duel.%player%} to false
 			
 		if {duel.last-invite.%player%} is not set:
-			message "{@prefix} Personne ne t'as demandé en duel..."
+			message "&7Nobody has ask you for a duel recently"
 			stop
 			
 		set {_verif} to 0
 		loop all players:
 			if "%{duel.last-invite.%player%}%" is "%loop-player%":
 				if {duel.in-duel.%loop-player%} is true:
-					message "{@prefix} %loop-player% est déjà en duel..."
+					message "&7Error, this player is already in a duel"
 					stop
 					
 				while {duel.in-duel.%player%} is false:
@@ -240,10 +236,10 @@ command /accept:
 										set slot {_count} of player's inventory to {duel-kit.%{_count}%.main.%loop-value-2%}
 										set slot {_count} of loop-player's inventory to {duel-kit.%{_count}%.main.%loop-value-2%}
 										add 1 to {_count}
-									set the helmet of player to {duel-kit.casque.%loop-value-2%}
-									set the chestplate of player to {duel-kit.ventre.%loop-value-2%}
-									set the leggings of player to {duel-kit.jambes.%loop-value-2%}
-									set the boots of player to {duel-kit.pieds.%loop-value-2%}
+									set the helmet of player to {duel-kit.helmet.%loop-value-2%}
+									set the chestplate of player to {duel-kit.chestplate.%loop-value-2%}
+									set the leggings of player to {duel-kit.leggings.%loop-value-2%}
+									set the boots of player to {duel-kit.boots.%loop-value-2%}
 									
 									set the helmet of loop-player to {duel-kit.casque.%loop-value-2%}
 									set the chestplate of loop-player to {duel-kit.ventre.%loop-value-2%}
