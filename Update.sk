@@ -61,3 +61,61 @@ command /startquests:
      send "&e&l* &7%{QuestSlot::1::%UUID of player%}%"
      send "&e&l* &7%{QuestSlot::2::%UUID of player%}%"
      send "&e&l* &7%{QuestSlot::3::%UUID of player%}%"
+     
+     
+     
+function TPArena(p, player, t, text):
+  set {_Randomizer} to a random integer between 1 and {NumberOfArenas}
+  if {_Randomizer} is 1:
+     
+     
+command /duel [<player>] [<text>]:
+  description: Basic Duel Command
+  permission: kitpvp.duel
+  permission message: &cYou don't have permission
+  trigger:
+    if arg-1 is not set:
+      send "&7You must specify a player"
+    else:
+      if {DuelRequest::%UUID of arg-1%::%UUID of player%} is true:
+        send "&7You have already sent a request to this user"
+      else:
+        if {RequestedForADuel::%UUID of arg-1%} is true:
+          send "&7Someone has already requested to duel this player"
+        else:
+          wait 1 tick
+          open chest with 1 row named "Choose an Arena" to player
+          if {Arena::Test1} is false:
+            loop {ArenaPlayers::Test1}:
+              set {_Chosen} to a random element out of {ArenaPlayers::Test1}
+            format gui slot 0 of player with 1 barrier named "&c&lArena Test" with lore "||&7Status: &cUnavailable||&7Current Duel: &aTRUE||||&eClick to spectate duel" to run player command "/spectateduel %{_Chosen}%" with left click
+          else:
+            format gui slot 0 of player with 1 grass named "&a&lArena Test" with lore "||&7Status: &aAvailable||&7Current Duel: &cFALSE||||&eClick to select" to run player command "/duel %arg-1% %arg-2%" with left click
+          set {RequestedForADuel::%UUID of arg-1%} to true
+          set {DuelRequest::%UUID of player%::%UUID of arg-1%} to true
+          close player's inventory
+          send "&7You sent a duel request to &6%arg-1%" to player
+          json("%arg-1%", "&e%player% &7has requested a duel. &a&l[ACCEPT] &c&l[DENY]")
+
+command /accept [<player>]:
+  description: Duel Accept Command
+  permission: kitpvp.duels.accept
+  permission message: &cYou don't have permission
+  trigger:
+    if arg-1 is not set:
+      send "&7You must specify a player"
+    else:
+      if {RequestedForADuel::%UUID of player%} is false:
+        send "&7Nobody has requested to duel you"
+      else:
+        if {DuelRequest::%UUID of player%::%UUID of arg-1%} is false:
+          send "&7This player has not requested to duel you"
+        else:
+          send "&7You accepted &e%arg-1%'s &7duel request"
+          send "&e%player% &7has accepted your duel request"
+          teleporttoArena(p, arena)
+          
+      
+      
+      
+      
