@@ -241,35 +241,35 @@ command /accept:
 									set the leggings of player to {duel-kit.leggings.%loop-value-2%}
 									set the boots of player to {duel-kit.boots.%loop-value-2%}
 									
-									set the helmet of loop-player to {duel-kit.casque.%loop-value-2%}
-									set the chestplate of loop-player to {duel-kit.ventre.%loop-value-2%}
-									set the leggings of loop-player to {duel-kit.jambes.%loop-value-2%}
-									set the boots of loop-player to {duel-kit.pieds.%loop-value-2%}
+									set the helmet of loop-player to {duel-kit.helmet.%loop-value-2%}
+									set the chestplate of loop-player to {duel-kit.chestplate.%loop-value-2%}
+									set the leggings of loop-player to {duel-kit.leggings.%loop-value-2%}
+									set the boots of loop-player to {duel-kit.boots.%loop-value-2%}
 									
 									teleport player at {duel.arena.spawn1.%loop-value-2%}
 									teleport loop-player at {duel.arena.spawn2.%loop-value-2%}
 									
 									set {duel.arena.use.%loop-value-2%} to true
 									
-									message "{@prefix} Le duel commence..." to player
-									message "{@prefix} Le duel commence..." to loop-player
+									message "&7Starting Duel" to player
+									message "&7Starting Duel" to loop-player
 									
 									clear {duel.last-invite.%player%}
 									clear {duel.last-invite.%loop-player%}
 									stop
 								else:
-									message "{@prefix} %loop-player% est maintenant en duel..."
+									message "&e%loop-player% &7is already in a duel"
 									clear {duel.last-invite.%player%}
 									stop
 					wait 1 seconds
-					message "{@prefix} Aucune arène disponible... Nouvelle recherche..." to player			
-					message "{@prefix} Aucune arène disponible... Nouvelle recherche..." to loop-player			
+					message "&7No Arena Available, Searching..." to player			
+					message "&7No Arena Available, Searching" to loop-player			
 								
 on death of player:
 	if {duel.in-duel.%victim%} is true:
 		clear drops
 		if attacker is a player:
-			set death message "{@prefix} %attacker% (&c&l%health of attacker% &c♥&f) a gagné son duel contre %victim%"
+			set death message "{@prefix} %attacker% (&c&l%health of attacker% &c♥&f) won the duel against %victim%"
 			set {duel.in-duel.%victim%} to false
 			set {duel.in-duel.%attacker%} to false
 			
@@ -289,7 +289,7 @@ on death of player:
 			loop all players:
 				if {duel.in-duel.%loop-player%} is true:
 					if "%{duel.in-arena.%loop-player%}%" is "%{duel.in-arena.%victim%}%":
-						set death message "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) a gagné son duel contre %victim%"
+						set death message "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) won the duel against %victim%"
 						set {duel.in-duel.%victim%} to false
 						set {duel.in-duel.%loop-player%} to false
 						
@@ -311,7 +311,7 @@ on quit:
 		loop all players:
 			if {duel.in-duel.%loop-player%} is true:
 				if "%{duel.in-arena.%loop-player%}%" is "%{duel.in-arena.%player%}%":
-					set leave message to "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) a gagné son duel contre %player%"
+					set leave message to "{@prefix} %loop-player% (&c&l%health of loop-player% &c♥&f) won the duel against %player%"
 					set {duel.in-duel.%player%} to false
 					set {duel.in-duel.%loop-player%} to false
 					
